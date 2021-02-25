@@ -1,11 +1,6 @@
 <template>
   <heat-map
     :points="data"
-    :lat="getCenterMap().lat"
-    :lng="getCenterMap().lng"
-    :width="600"
-    :height="500"
-    :radius="40"
   />
 </template>
 
@@ -15,13 +10,9 @@ import HeatMap from '@/components/HeatMap'
 export default {
   name: 'view-page',
   components: { HeatMap },
-  props: {
-    apiUrl: String
-  },
   data: () => {
     return {
-      items: null
-      /*data: [
+      data: [
         {lat: 45.407707, lng: 11.873161, weight: 3},
         {lat: 45.397959, lng: 11.877189}, 
         {lat: 45.397959, lng: 11.877190}, 
@@ -53,9 +44,9 @@ export default {
         {lat: 45.408857654639235, lng: 11.873406951844445},
         {lat: 45.408857654639235, lng: 11.8734069518666},
         {lat: 45.40885765463, lng: 11.873406},
-      ]*/
+      ]
     }
-  },
+  }
   /*created() {
     axios.get("http://localhost:3000/luoghi")
       .then(response => this.items = response.luoghi.lat + response.luoghi.lng)
@@ -93,14 +84,14 @@ export default {
   /*http: {
     emulateJSON:true,
     emulateHTTP: true
-  },*/
+  },
   methods: {
     getCenterMap () {
         return {
             lat:45.407588, 
             lng:11.877029
       }
-    },/*
+    },
     function() {
        this.$http.post('http://localhost:3000/luoghi',
         {
@@ -110,7 +101,7 @@ export default {
             console.log(data);       // Stampo nella console i dati ricevuti dal server
             this.dati_inviati = true;
         });
-    }*/
-  }
+    }
+  }*/
 }
 </script>

@@ -5,8 +5,12 @@
 
 </template>
 
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPjpdiS-hafI9F8ap5kegUFu6exQ4fElY&libraries=visualization&callback=initMap">
+</script>
+
 <script>
-import axios from 'axios';
+//import axios from 'axios';
 
 const bounds= {
       north: 45.444315,
@@ -18,18 +22,18 @@ export default {
   name: 'HeatMap',
   data() {
     return {
-        lati: [],
-        lngo: []
+        //lati: [],
+        //lngo: []
     }
   },
   props: {
     lat: {
       type: Number,
-      default: () => 37.775
+      default: () => 45.407588, 
     },
     lng: {
       type: Number,
-      default: () => -122.434
+      default: () => 11.877029
     },
     initialZoom: {
       type: Number,
@@ -59,14 +63,6 @@ export default {
       type: Number,
       default: () => 15
     },
-    markers: [
-      {
-        position: {lat: 45.444315, lng: 11.825627}
-      },
-      {
-        position: {lat: 45.362051, lng: 11.948540}
-      }
-    ],
     maxIntensity: {
       type: Number,
       default: () => 5
@@ -88,16 +84,16 @@ export default {
       }
     },
     heatmapPoints () {
-      return this.data.map(
-          data => new google.maps.LatLng(data.lati, data.lngo)
+      return this.points.map(
+          points => new google.maps.LatLng(points.lat, points.lng)
       )
     }
   },
   
   mounted () {
-    axios
+    /*axios
       .get('http://localhost:3000/location')
-      .then(response => (this.points = response.data))
+      .then(response => (this.points = response.data))*/
 
     return this.$gmapApiPromiseLazy().then(() => {
       // eslint-disable-next-line
@@ -121,18 +117,6 @@ export default {
       this.$heatmap.setMap(this.$mapObject)
     })
     
-  },
-  /*methods: {
-    // Pushes posts to the server when called.
-    postPost() {
-      axios.post(`https://www.google.com/maps/search/?api=1&query=45.397959,11.87721`, {
-        body: this.postBody
-      })
-      .then(response => {})
-      .catch(e => {
-        this.errors.push(e)
-      })
-    }
-  }*/
+  }
 }
 </script>

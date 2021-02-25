@@ -6,8 +6,8 @@
 </template>
 
 <script>
-//import HeatMap from './components/Page.vue'
-import HeatMap from '@/components/HeatMap.vue'
+import HeatMap from './components/Page.vue'
+//import HeatMap from '@/components/HeatMap.vue'
 
 export default {
   name: 'App',
