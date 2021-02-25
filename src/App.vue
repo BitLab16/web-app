@@ -1,13 +1,11 @@
 <template>
   <div id="app">
     <HeatMap/>
-    <!--<Page apiUrl="https://www.google.com/maps/search/?api=1&query=45.397959,11.87721"/>-->
   </div>
 </template>
 
 <script>
-import HeatMap from './components/Page.vue'
-//import HeatMap from '@/components/HeatMap.vue'
+import HeatMap from '@/components/Page.vue'
 
 export default {
   name: 'App',

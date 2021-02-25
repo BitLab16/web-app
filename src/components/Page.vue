@@ -1,18 +1,23 @@
 <template>
   <heat-map
-    :points="data"
+    :points="coordinates"
   />
 </template>
 
 <script>
 import HeatMap from '@/components/HeatMap'
+import axios from 'axios';
 
 export default {
   name: 'view-page',
   components: { HeatMap },
-  data: () => {
+  data() {
     return {
-      data: [
+      coordinates: [],
+        
+      errors: []
+      /*data:
+      [
         {lat: 45.407707, lng: 11.873161, weight: 3},
         {lat: 45.397959, lng: 11.877189}, 
         {lat: 45.397959, lng: 11.877190}, 
@@ -43,65 +48,17 @@ export default {
         {lat: 45.408857654654545, lng: 11.873406951812912},
         {lat: 45.408857654639235, lng: 11.873406951844445},
         {lat: 45.408857654639235, lng: 11.8734069518666},
-        {lat: 45.40885765463, lng: 11.873406},
-      ]
+        {lat: 45.40885765463, lng: 11.873406}
+      ]*/
     }
+  },
+  mounted() {
+    axios.get("http://localhost:3000/coordinates")
+      .then(response => {this.coordinates = response.data
+      })
+      .catch(e => {
+      this.errors.push(e)
+    })
   }
-  /*created() {
-    axios.get("http://localhost:3000/luoghi")
-      .then(response => this.items = response.luoghi.lat + response.luoghi.lng)
-  },*/
-  /*async created() {
-    try {
-      const response = await axios.get(this.apiUrl)
-      this.items = response.data
-    } catch (e) {
-      this.errors.push(e)
-    }
-  },*/
-  /*mounted () {
-    axios
-      .get('https://www.google.com/maps/search/?api=1&query=45.397959,11.87721')
-      .then(response => {
-        this.data = response.data.bpi
-      })
-      .catch(error => {
-        console.log(error)
-        this.errored = true
-      })
-      .finally(() => this.loading = false)
-  },
-  created() {
-    axios.get(`https://www.google.com/maps/search/?api=1&query=45.397959,11.87721`)
-    .then(response => {
-      // JSON responses are automatically parsed.
-      this.posts = response.data
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
-  },*/
-  /*http: {
-    emulateJSON:true,
-    emulateHTTP: true
-  },
-  methods: {
-    getCenterMap () {
-        return {
-            lat:45.407588, 
-            lng:11.877029
-      }
-    },
-    function() {
-       this.$http.post('http://localhost:3000/luoghi',
-        {
-            lat: this.luoghi.lat,              // Passo un oggetto con i dati da inviare via POST
-            lng: this.luoghi.lng
-        }).then(function(data) {
-            console.log(data);       // Stampo nella console i dati ricevuti dal server
-            this.dati_inviati = true;
-        });
-    }
-  }*/
 }
 </script>
