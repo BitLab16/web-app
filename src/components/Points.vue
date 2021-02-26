@@ -13,8 +13,11 @@ export default {
   components: { HeatMap },
   data() {
     return {
-      coordinates: [],
-        
+      coordinates: {
+        lat: null,
+        lng: null,
+        flow: null
+      },
       errors: []
       /*data:
       [
@@ -48,7 +51,8 @@ export default {
         {lat: 45.408857654654545, lng: 11.873406951812912},
         {lat: 45.408857654639235, lng: 11.873406951844445},
         {lat: 45.408857654639235, lng: 11.8734069518666},
-        {lat: 45.40885765463, lng: 11.873406}
+        {lat: 45.40885765463, lng: 11.873406},
+        {lat: 45.375278, lng: 11.870863, weight: 20}
       ]*/
     }
   },
