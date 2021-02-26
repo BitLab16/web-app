@@ -54,7 +54,7 @@ export default {
   computed: {
     heatmapPoints () {
       return this.points.map(
-          points => new google.maps.LatLng(points)
+          points => new google.maps.LatLng(points.lat, points.lng)
       )
     }
   },
