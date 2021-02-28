@@ -52,10 +52,12 @@ export default {
     }
   },
   computed: {
+    //ora inutile
     heatmapPoints () {
       return this.points.map(
-          points => new google.maps.LatLng(points.lat, points.lng)
-      )
+          this.points.map(points => (
+              {location: new google.maps.LatLng(points.lat, points.lng),
+              weight: points.flow})))
     }
   },
   
@@ -72,7 +74,9 @@ export default {
       })
 
         this.$heatmap = new google.maps.visualization.HeatmapLayer({
-        data: this.heatmapPoints,
+        data: this.points.map(points => (
+              {location: new google.maps.LatLng(points.lat, points.lng),
+              weight: points.flow})),
         map: this.$mapObject,
         opacity: this.opacity,
         radius: this.radius,
