@@ -1,16 +1,19 @@
 <template>
   <div id="app">
     <HeatMap/>
+    <VueSlideBar/>
   </div>
 </template>
 
 <script>
 import HeatMap from '@/components/Points.vue'
+import VueSlideBar from '@/components/Slider.vue'
 
 export default {
   name: 'App',
   components: {
-    HeatMap
+    HeatMap,
+    VueSlideBar
   }
 }
 </script>

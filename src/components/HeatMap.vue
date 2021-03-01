@@ -52,13 +52,7 @@ export default {
     }
   },
   computed: {
-    //ora inutile
-    heatmapPoints () {
-      return this.points.map(
-          this.points.map(points => (
-              {location: new google.maps.LatLng(points.lat, points.lng),
-              weight: points.flow})))
-    }
+    
   },
   
   mounted () {
