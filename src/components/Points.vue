@@ -1,49 +1,58 @@
 <template>
   <heat-map
-    :points="coordinates"
+    :points="punti"
   />
 </template>
 
 <script>
 import HeatMap from '@/components/HeatMap'
-import axios from 'axios';
+//import axios from 'axios';
 
 export default {
   name: 'view-page',
   components: { HeatMap},
   data() {
     return {
-      coordinates: {
-        time: null,
-        lat: null,
-        lng: null,
-        flow: null,
-      },
+      coordinates: [],
   
-      punti: [
-      /*lat: null,
-        lng: null,
-        flow: null,*/
-      ]
+      punti: []
+    }
+  },
+  beforeMount() {
+    this.getData();
+    
+  },
+  methods: {
+    async getData() {
+      const res = await fetch("http://localhost:3000/coordinates");
+      const data = await res.json();
+      this.coordinates = data;
+      //alert(this.coordinates)
+
+      //console.log(this.coordinates)
+      //if(this.coordinates[0]===)
+      this.punti.push(this.coordinates[0])
+      //console.log(this.punti[0])
     }
   },
   mounted() {
+    console.log(this.punti[0])
+    /*
     axios.get("http://localhost:3000/coordinates")
-      .then(response => {this.coordinates = response.data})
-
-    //this.punti=["45.397959", "11.87721", "1"];
-    /*if(this.coordinates.time===slider.value) {
-      axios.post("", {
-        body: this.postBody
-      })
-      .then(response => {})
-    }*/
+    .then(response => {this.coordinates = response.data});
     
-    /*this.punti.lat="45.397959"
-    this.punti.lng="11.87721"
-    this.punti.flow="1"*/
-    alert(this.punti)
-  }
-} 
+    
+    
+
+    if (!this.coordinates.flow) {
+      alert("hdeu")
+      this.punti.push()
+      //alert(this.punti)
+    }
+    else {
+      alert("hdieushfiuehd")
+    }*/
+  },
+}
 
 </script>

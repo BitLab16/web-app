@@ -52,12 +52,12 @@ export default {
     }
   },
   computed: {
-    
+  
   },
   
   mounted () {
+   
     return this.$gmapApiPromiseLazy().then(() => {
-
         this.$mapObject = new google.maps.Map(this.$refs.heatmap, {
         zoom: this.initialZoom,
         center: { lat: this.lat, lng: this.lng },
@@ -66,7 +66,6 @@ export default {
         },
         mapTypeId: this.mapType,
       })
-
         this.$heatmap = new google.maps.visualization.HeatmapLayer({
         data: this.points.map(points => (
               {location: new google.maps.LatLng(points.lat, points.lng),
@@ -76,9 +75,19 @@ export default {
         radius: this.radius,
         maxIntensity: this.maxIntensity,
       })
-
       this.$heatmap.setMap(this.$mapObject)
+
+       //alert("gfsyu")
     })
+    
+    if (this.coordinates['time']===null) {
+      alert("hdeu")
+      this.punti.push()
+      //alert(this.punti)
+    }
+    else {
+      alert("hdieushfiuehd")
+    }
     
   }
 }
