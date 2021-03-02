@@ -1,6 +1,6 @@
 <template>
   <heat-map
-    :points="punti"
+    :points="coordinates"
   />
 </template>
 
@@ -32,12 +32,12 @@ export default {
       .then(response => {this.coordinates = response.data})
 
     //this.punti=["45.397959", "11.87721", "1"];
-    if(this.coordinates.time===slider.value) {
+    /*if(this.coordinates.time===slider.value) {
       axios.post("", {
         body: this.postBody
       })
       .then(response => {})
-    }
+    }*/
     
     /*this.punti.lat="45.397959"
     this.punti.lng="11.87721"
