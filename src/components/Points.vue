@@ -6,53 +6,40 @@
 
 <script>
 import HeatMap from '@/components/HeatMap'
-//import axios from 'axios';
-
 export default {
   name: 'view-page',
-  components: { HeatMap},
+  components: { HeatMap },
+  props: {
+    sliderValue: {
+      type: String,
+      default: "18:25"
+    }
+  },
   data() {
     return {
       coordinates: [],
-  
       punti: []
     }
   },
   beforeMount() {
     this.getData();
-    
   },
   methods: {
     async getData() {
       const res = await fetch("http://localhost:3000/coordinates");
       const data = await res.json();
       this.coordinates = data;
-      //alert(this.coordinates)
-
-      //console.log(this.coordinates)
-      //if(this.coordinates[0]===)
-      this.punti.push(this.coordinates[0])
-      //console.log(this.punti[0])
+      
+      
+      for(let i=0; i<this.coordinates.length; i++) {
+        if(this.coordinates[i].time==this.sliderValue) {
+          this.punti.push(this.coordinates[i])
+          //console.log(this.punti)
+        }
+      }
+      console.log(this.sliderValue)
+      //console.log(this.punti[1].lat)
     }
-  },
-  mounted() {
-    console.log(this.punti[0])
-    /*
-    axios.get("http://localhost:3000/coordinates")
-    .then(response => {this.coordinates = response.data});
-    
-    
-    
-
-    if (!this.coordinates.flow) {
-      alert("hdeu")
-      this.punti.push()
-      //alert(this.punti)
-    }
-    else {
-      alert("hdieushfiuehd")
-    }*/
   },
 }
-
 </script>

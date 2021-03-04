@@ -6,17 +6,24 @@
       :range="slider.range"
       :processStyle="{ backgroundColor: '#d8d8d8' }"
       @callbackRange="callbackRange">
-      <template slot="tooltip" >
+      <template slot="tooltip">
         <img src="static/images/rectangle-slider.svg">
       </template>
     </VueSlideBar>
+    <Points
+      :sliderValue="rangeValue.label"
+    />
   </div>
 </template>
 
 <script>
 import VueSlideBar from 'vue-slide-bar'
-
+import Points from '@/components/Points'
 export default {
+  components: {
+    VueSlideBar, 
+    Points
+  },
   data () {
     return {
       rangeValue: {},
@@ -55,9 +62,6 @@ export default {
     callbackRange (val) {
       this.rangeValue = val
     }
-  },
-  components: {
-    VueSlideBar
   }
 }
 </script>
