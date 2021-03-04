@@ -28,7 +28,7 @@ export default {
     return {
       rangeValue: {},
       slider: {
-        value: "18:30",
+        value: "18:25",
         data: [
           "18:20",
           "18:25",
