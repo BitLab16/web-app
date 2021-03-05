@@ -5,7 +5,9 @@ Vue.use(Vuex);
  
 export default new Vuex.Store({
  state: {
-    sliderValue: "casdcasdcasd"
+    sliderValue: "casdcasdcasd",
+    firstBoolean: false,
+    secondBoolean: false
  },
  getters: {},
  mutations: {},

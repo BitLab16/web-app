@@ -56,6 +56,8 @@ export default {
     callbackRange (val) {
       console.log("Slider::callBackRange new rangeValue: " + JSON.stringify(val) );
       this.$store.state.sliderValue = val.label;
+      this.$store.state.firstBoolean = true;
+      this.$store.state.secondBoolean = true;
     }
   }
 }

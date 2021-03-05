@@ -22,12 +22,14 @@ export default {
     console.log("Points::beforeMount");
     this.getData();
     var f = () => {
+      setTimeout(f, 100);
+      if (! this.$store.state.secondBoolean) return;
+      this.$store.state.secondBoolean = false;
       console.log("STORE TRY1" + this.$store.state.sliderValue);
       sliderValue = this.$store.state.sliderValue;
       this.getData();
-      setTimeout(f, 2000);
     };
-    setTimeout(f, 10000);
+    f();
   },
   mounted() {
   },

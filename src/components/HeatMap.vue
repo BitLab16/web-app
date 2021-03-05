@@ -82,11 +82,12 @@ export default {
       })
     });
     var f = ()=>{
+      setTimeout(f, 100);
+      if (! this.$store.state.firstBoolean) return;
       console.log("HeatMap::mounted::f");
-      try{this.$heatmap.setMap(null);}
-      catch(e){}
+      this.$store.state.firstBoolean = false;
+      try{this.$heatmap.setMap(null);} catch(e){}
       this.update_map();
-      setTimeout(f, 1000);
     }
     f();
   }
