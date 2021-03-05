@@ -56,10 +56,22 @@ export default {
       return this.points.map(points => ({
           location: new google.maps.LatLng(points.lat, points.lng),
           weight: points.flow}))    
-    }
+    },
+    update_map() {
+      this.$gmapApiPromiseLazy().then(() => {
+        this.$heatmap = new google.maps.visualization.HeatmapLayer({
+          data: this.pointsGenerator(),
+          map: this.$mapObject,
+          opacity: this.opacity,
+          radius: this.radius,
+          maxIntensity: this.maxIntensity,
+        })
+        this.$heatmap.setMap(this.$mapObject)
+      })
+    },
   },
   mounted() {
-    return this.$gmapApiPromiseLazy().then(() => {
+    this.$gmapApiPromiseLazy().then(()=> {
       this.$mapObject = new google.maps.Map(this.$refs.heatmap, {
         zoom: this.initialZoom,
         center: { lat: this.lat, lng: this.lng },
@@ -68,15 +80,15 @@ export default {
         },
         mapTypeId: this.mapType,
       })
-      this.$heatmap = new google.maps.visualization.HeatmapLayer({
-        data: this.pointsGenerator(),
-        map: this.$mapObject,
-        opacity: this.opacity,
-        radius: this.radius,
-        maxIntensity: this.maxIntensity,
-      })
-      this.$heatmap.setMap(this.$mapObject)
-    })   
+    });
+    var f = ()=>{
+      console.log("HeatMap::mounted::f");
+      try{this.$heatmap.setMap(null);}
+      catch(e){}
+      this.update_map();
+      setTimeout(f, 1000);
+    }
+    f();
   }
 }
 </script>
