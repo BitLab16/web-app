@@ -51,7 +51,7 @@ export default {
       default: 5
     }
   },
-  mounted () {
+  mounted() {
     return this.$gmapApiPromiseLazy().then(() => {
       this.$mapObject = new google.maps.Map(this.$refs.heatmap, {
         zoom: this.initialZoom,

@@ -10,23 +10,17 @@
         <img src="static/images/rectangle-slider.svg">
       </template>
     </VueSlideBar>
-    <Points
-      :sliderValue="rangeValue.label"
-    />
   </div>
 </template>
 
 <script>
 import VueSlideBar from 'vue-slide-bar'
-import Points from '@/components/Points'
 export default {
   components: {
-    VueSlideBar, 
-    Points
+    VueSlideBar
   },
-  data () {
+  data() {
     return {
-      rangeValue: {},
       slider: {
         value: "18:25",
         data: [
@@ -60,7 +54,8 @@ export default {
   },
   methods: {
     callbackRange (val) {
-      this.rangeValue = val
+      console.log("Slider::callBackRange new rangeValue: " + JSON.stringify(val) );
+      this.$store.state.sliderValue = val.label;
     }
   }
 }

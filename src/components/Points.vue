@@ -6,6 +6,9 @@
 
 <script>
 import HeatMap from '@/components/HeatMap'
+
+var data;
+
 export default {
   name: 'view-page',
   components: { HeatMap },
@@ -17,25 +20,39 @@ export default {
   },
   data() {
     return {
-      coordinates: [],
       punti: []
     }
   },
   beforeMount() {
-    this.getData()
+    console.log("Points::beforeMount");
+  },
+  mounted() {
+    /*var f = () => {
+      console.log("STORE TRY1" + this.$store.state.sliderValue);
+      this.sliderValue = this.$store.state.sliderValue;
+      this.getData();
+      setTimeout(f, 1000);
+    };*/
+    //f();
   },
   methods: {
-    async getData() {
+    async load() {
+      if (data != undefined) return;
       const res = await fetch("http://localhost:3000/coordinates");
-      const data = await res.json();
-      this.coordinates = data;
-
-      for(let i=0; i<this.coordinates.length; i++) {
-        if(this.coordinates[i].time==this.sliderValue) {
-          this.punti.push(this.coordinates[i])
+      data = await res.json();
+    },
+    async getData() {
+      
+      await this.load();
+      
+      this.punti = [];
+      for(let i=0; i<data.length; i++) {
+        if(data[i].time==this.sliderValue) {
+          this.punti.push(data[i]);
         }
       }
-      console.log(this.sliderValue)
+      console.log("Points:getData slidervalue: " + this.sliderValue)
+      console.log("Points:getData punti: " + JSON.stringify(this.punti))
     },
   }
 }
