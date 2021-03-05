@@ -51,6 +51,13 @@ export default {
       default: 5
     }
   },
+  methods: {
+    pointsGenerator() {
+      return this.points.map(points => ({
+          location: new google.maps.LatLng(points.lat, points.lng),
+          weight: points.flow}))    
+    }
+  },
   mounted() {
     return this.$gmapApiPromiseLazy().then(() => {
       this.$mapObject = new google.maps.Map(this.$refs.heatmap, {
@@ -62,10 +69,7 @@ export default {
         mapTypeId: this.mapType,
       })
       this.$heatmap = new google.maps.visualization.HeatmapLayer({
-        data: this.points.map(points => ({
-          location: new google.maps.LatLng(points.lat, points.lng),
-          weight: points.flow
-        })),
+        data: this.pointsGenerator(),
         map: this.$mapObject,
         opacity: this.opacity,
         radius: this.radius,

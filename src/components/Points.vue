@@ -13,9 +13,6 @@ var sliderValue = "18:25";
 export default {
   name: 'view-page',
   components: { HeatMap },
-  props: {
-    
-  },
   data() {
     return {
       punti: []
@@ -49,7 +46,7 @@ export default {
         if(data[i].time==sliderValue) {
           this.punti.push(data[i]);
         }
-      }
+      }     
       console.log("Points:getData slidervalue: " + sliderValue)
       console.log("Points:getData punti: " + JSON.stringify(this.punti))
     },
