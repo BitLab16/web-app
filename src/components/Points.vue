@@ -8,15 +8,13 @@
 import HeatMap from '@/components/HeatMap'
 
 var data;
+var sliderValue = "18:25";
 
 export default {
   name: 'view-page',
   components: { HeatMap },
   props: {
-    sliderValue: {
-      type: String,
-      default: "18:30"
-    }
+    
   },
   data() {
     return {
@@ -25,15 +23,16 @@ export default {
   },
   beforeMount() {
     console.log("Points::beforeMount");
+    this.getData();
+    var f = () => {
+      console.log("STORE TRY1" + this.$store.state.sliderValue);
+      sliderValue = this.$store.state.sliderValue;
+      this.getData();
+      setTimeout(f, 2000);
+    };
+    setTimeout(f, 10000);
   },
   mounted() {
-    /*var f = () => {
-      console.log("STORE TRY1" + this.$store.state.sliderValue);
-      this.sliderValue = this.$store.state.sliderValue;
-      this.getData();
-      setTimeout(f, 1000);
-    };*/
-    //f();
   },
   methods: {
     async load() {
@@ -47,11 +46,11 @@ export default {
       
       this.punti = [];
       for(let i=0; i<data.length; i++) {
-        if(data[i].time==this.sliderValue) {
+        if(data[i].time==sliderValue) {
           this.punti.push(data[i]);
         }
       }
-      console.log("Points:getData slidervalue: " + this.sliderValue)
+      console.log("Points:getData slidervalue: " + sliderValue)
       console.log("Points:getData punti: " + JSON.stringify(this.punti))
     },
   }
