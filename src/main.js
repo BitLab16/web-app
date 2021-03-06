@@ -3,10 +3,6 @@ import App from './App.vue'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import store from "./store";
 
-
-import FullCalendar from 'vue-full-calendar'
-Vue.use(FullCalendar)
-
 Vue.config.productionTip = false
 Vue.use(VueGoogleMaps, {
   load: {
