@@ -8,7 +8,7 @@
 import HeatMap from '@/components/HeatMap'
 
 var data;
-var sliderValue = "";
+var sliderValue = ""
 var dateValue = ""
 
 export default {
