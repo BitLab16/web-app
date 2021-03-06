@@ -44,7 +44,7 @@
         props: {
             width: { type: String, default: '238px' },
             readonly: { type: Boolean, default: false },
-            value: { type: String, default: '' },
+            value: { type: String, default: new Date().toISOString().slice(0, 10) },
             format: { type: String, default: 'YYYY-MM-DD' },
             name: { type: String, default: '' }
         },
@@ -166,7 +166,8 @@
 <style scoped>
 .datetime-picker {
     position: fixed;
-    top: 0px;
+    top: 10px;
+    left: 5px;
     display: inline-block;
     font-family: "Segoe UI","Lucida Grande",Helvetica,Arial,"Microsoft YaHei";
     -webkit-font-smoothing: antialiased;
@@ -181,7 +182,10 @@
     height: 30px;
     outline: 0 none;
     border: 1px solid #ccc;
-    font-size: 13px;
+    border-radius: 15px;
+    font-size: 15px;
+    text-align: center;
+    font-weight: bold;
 }
 .datetime-picker .picker-wrap {
     position: absolute;
@@ -190,7 +194,8 @@
     height: 280px;
     margin-top: 2px;
     background-color: #fff;
-    box-shadow: 0 0 6px #ccc;
+    box-shadow: 5px 7px rgba(0,0,0,0.51);
+    border-radius: 0px 0px 5px 5px;
 }
 .datetime-picker table {
     width: 100%;
@@ -217,23 +222,27 @@
 }
 .datetime-picker td:hover {
     background-color: #f0f0f0;
+    border-radius: 20px;
 }
 .datetime-picker td.date-pass, .datetime-picker td.date-future {
     color: #aaa;
 }
 .datetime-picker td.date-active {
-    background-color: #ececec;
-    color: #3bb4f2;
+    background-color: green;
+    color: white;
+    border-radius: 20px;
 }
 .datetime-picker .date-head {
-    background-color: #3bb4f2;
+    background-color: green;
     text-align: center;
     color: #fff;
     font-size: 14px;
+    
 }
 .datetime-picker .date-days {
-    color: #3bb4f2;
+    color: green;
     font-size: 14px;
+    border-radius: 5px;
 }
 .datetime-picker .show-year {
     display: inline-block;
@@ -254,6 +263,6 @@
 }
 .datetime-picker .btn-prev:hover,
 .datetime-picker .btn-next:hover {
-    background: rgba(16, 160, 234, 0.5);
+    background: rgb(29, 150, 13);
 }
 </style>
