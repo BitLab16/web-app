@@ -10,7 +10,7 @@ export default new Vuex.Store({
     secondBoolean: false,
     dateFirstBool: false,
     dateSecontBool: false,
-    dateValue: new Date().toISOString().slice(0, 10) 
+    dateValue: ""
  },
  getters: {},
  mutations: {},
