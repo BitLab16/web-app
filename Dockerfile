@@ -5,7 +5,7 @@ COPY public ./
 COPY db.json ./
 COPY package.json ./
 COPY babel.config.js ./
-RUN npm install && npm run build
+RUN npm install -g @vue/cli && npm install && npm run build
 
 FROM nginx:stable-alpine
 COPY --from=build-stage /app/db.json /usr/share/nginx/html
