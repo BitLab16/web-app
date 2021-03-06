@@ -22,32 +22,118 @@ export default {
   data() {
     return {
       slider: {
-        value: "18:25",
+        value: "12:00",
         data: [
-          "18:20",
-          "18:25",
-          "18:30",
-          "18:35",
-          "18:40"
+          "00:00",
+          "01:00",
+          "02:00",
+          "03:00",
+          "04:00",
+          "05:00",
+          "06:00",
+          "07:00",
+          "08:00",
+          "09:00",
+          "10:00",
+          "11:00",
+          "12:00",
+          "13:00",
+          "14:00",
+          "15:00",
+          "16:00",
+          "17:00",
+          "18:00",
+          "19:00",
+          "20:00",
+          "21:00",
+          "22:00",
+          "23:00",
         ],
         range: [
           {
-            label: '18:20'
+            label: '00:00'
           },
           {
-            label: '18:25',
+            label: '01:00',
             isHide: true
           },
           {
-            label: '18:30'
+            label: '02:00'
           },
           {
-            label: '18:35',
+            label: '03:00',
             isHide: true
           },
           {
-            label: '18:40'
-          }
+            label: '04:00'
+          },
+          {
+            label: '05:00',
+            isHide: true
+          },
+          {
+            label: '06:00'
+          },
+          {
+            label: '07:00',
+            isHide: true
+          },
+          {
+            label: '08:00'
+          },
+          {
+            label: '09:00',
+            isHide: true
+          },
+          {
+            label: '10:00'
+          },
+          {
+            label: '11:00',
+            isHide: true
+          },
+          {
+            label: '12:00'
+          },
+          {
+            label: '13:00',
+            isHide: true
+          },
+          {
+            label: '14:00'
+          },
+          {
+            label: '15:00',
+            isHide: true
+          },
+          {
+            label: '16:00'
+          },
+          {
+            label: '17:00',
+            isHide: true
+          },
+          {
+            label: '18:00'
+          },
+          {
+            label: '19:00',
+            isHide: true
+          },
+          {
+            label: '20:00'
+          },
+          {
+            label: '21:00',
+            isHide: true
+          },
+          {
+            label: '22:00'
+          },
+          {
+            label: '23:00',
+            isHide: true
+          },
         ]
       }
     }
