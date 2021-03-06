@@ -1,14 +1,10 @@
-FROM node:lts-alpine as build-stage
+FROM node:lts-alpine
+RUN npm install -g http-server
 WORKDIR /app
-COPY src ./
-COPY public ./
-COPY db.json ./
-COPY package.json ./
-COPY babel.config.js ./
-RUN echo ------------------------
-RUN ls *
-RUN echo ------------------------
-RUN rm -rf node_modules
+COPY package*.json ./
 RUN npm install
-EXPOSE 80
-CMD ["npm", "run", "serve;"]
+COPY . .
+RUN npm run build
+
+EXPOSE 8080
+CMD [ "http-server", "dist" ]
