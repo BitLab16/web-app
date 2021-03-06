@@ -7,7 +7,10 @@ export default new Vuex.Store({
  state: {
     sliderValue: "12:00",
     firstBoolean: false,
-    secondBoolean: false
+    secondBoolean: false,
+    dateFirstBool: false,
+    dateSecontBool: false,
+    dateValue: ""
  },
  getters: {},
  mutations: {},

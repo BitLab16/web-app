@@ -83,9 +83,10 @@ export default {
     });
     var f = ()=>{
       setTimeout(f, 100);
-      if (! this.$store.state.firstBoolean) return;
+      if (! this.$store.state.firstBoolean && ! this.$store.state.dateFirstBool) return;
       console.log("HeatMap::mounted::f");
       this.$store.state.firstBoolean = false;
+      this.$store.state.dateFirstBool = false
       try{this.$heatmap.setMap(null);} catch(e){}
       this.update_map();
     }

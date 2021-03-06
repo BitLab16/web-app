@@ -6,9 +6,7 @@
       :range="slider.range"
       :processStyle="{ backgroundColor: '#d8d8d8' }"
       @callbackRange="callbackRange">
-      <template slot="tooltip">
-        <img src="static/images/rectangle-slider.svg">
-      </template>
+      
     </VueSlideBar>
   </div>
 </template>
@@ -154,11 +152,12 @@ export default {
         position: fixed;
         background-color: black;
         opacity: 0.8;
-        margin-left: 20vw;
-        margin-right: 20vw;
-        width: 60vw;
+        margin: collapse;
+        margin-left: 25vw;
+        margin-right: 25vw;
+        width: 50vw;
         height: 10vh;
-        bottom: 0;
+        top: 0;
         padding-left: 20px;  
         padding-right: 20px;   
     }

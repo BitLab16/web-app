@@ -8,7 +8,8 @@
 import HeatMap from '@/components/HeatMap'
 
 var data;
-var sliderValue = "12:00";
+var sliderValue = "";
+var dateValue = ""
 
 export default {
   name: 'view-page',
@@ -20,13 +21,15 @@ export default {
   },
   beforeMount() {
     console.log("Points::beforeMount");
-    this.getData();
+    //this.getData();
     var f = () => {
       setTimeout(f, 100);
-      if (! this.$store.state.secondBoolean) return;
+      if (! this.$store.state.secondBoolean && !this.$store.state.dateSecondBool) return;
       this.$store.state.secondBoolean = false;
+      this.$store.state.dateSecondBool = false
       console.log("STORE TRY1" + this.$store.state.sliderValue);
-      sliderValue = this.$store.state.sliderValue;
+      sliderValue = this.$store.state.sliderValue
+      dateValue = this.$store.state.dateValue
       this.getData();
     };
     f();
@@ -45,12 +48,12 @@ export default {
       
       this.punti = [];
       for(let i=0; i<data.length; i++) {
-        if(data[i].time==sliderValue) {
+        if(data[i].time==sliderValue && data[i].date==dateValue) {
           this.punti.push(data[i]);
         }
       }     
-      console.log("Points:getData slidervalue: " + sliderValue)
-      console.log("Points:getData punti: " + JSON.stringify(this.punti))
+      //console.log("Points:getData slidervalue: " + sliderValue)
+      //console.log("Points:getData punti: " + JSON.stringify(this.punti))
     },
   }
 }

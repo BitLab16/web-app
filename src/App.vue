@@ -1,8 +1,11 @@
 <template>
   <div id="app">
     <Points/>
-    <!-- <DatePicker/> -->
-    <date-picker v-model="date" lang="en" type="date" format="YYYY-MM-dd"></date-picker>
+    <DatePicker/>
+    <!--<datepicker :readonly="true" format="YYYY-MM-DD"></datepicker>
+    <datepicker format="YYYY-M-D" value="2015-9-5"></datepicker>
+    <datepicker :readonly="true" format="MMM/D/YYYY" width="300px"></datepicker>
+    <datepicker :readonly="true" format="MMM/D/YYYY" width="300px" name="date"></datepicker>-->
     <VueSlideBar/>
   </div>
 </template>
@@ -10,8 +13,8 @@
 <script>
 import Points from '@/components/Points.vue'
 import VueSlideBar from '@/components/Slider.vue'
-//import DatePicker from '@/components/Calendar.vue'
-import DatePicker from 'vue2-datepicker';
+import DatePicker from '@/components/DatePicker.vue'
+
 
 export default {
   name: 'App',
