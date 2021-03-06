@@ -5,6 +5,10 @@ COPY public ./
 COPY db.json ./
 COPY package.json ./
 COPY babel.config.js ./
+RUN echo ------------------------
+RUN ls *
+RUN echo ------------------------
+RUN rm -rf node_modules
 RUN npm install -g @vue/cli && npm install && npm run build
 
 FROM nginx:stable-alpine
