@@ -51,7 +51,7 @@
         data () {
             return {
                 show: false,
-                days: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                days: [ 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
                 months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 date: [],
                 now: new Date()
@@ -72,10 +72,10 @@
             update () {
                 var arr = [];
                 var time = new Date(this.now);
-                time.setMonth(time.getMonth(), 1);           // the first day
+                time.setMonth(time.getMonth(), 1);         // the first day
                 var curFirstDay = time.getDay();
                 curFirstDay === 0 && (curFirstDay = 7);
-                time.setDate(0);                             // the last day
+                time.setDate(0);                      // the last day
                 var lastDayCount = time.getDate();
                 for (let i = curFirstDay; i > 0; i--) {
                     arr.push({
@@ -83,10 +83,11 @@
                         time: new Date(time.getFullYear(), time.getMonth(), lastDayCount - i + 1),
                         status: 'date-pass'
                     });
+                    console.log(arr)
                 }
                 time.setMonth(time.getMonth() + 2, 0);       // the last day of this month
                 var curDayCount = time.getDate();
-                time.setDate(1);                             // fix bug when month change
+                time.setDate(1);                 // fix bug when month change
                 var value = this.value || this.stringify(new Date());
                 for (let i = 0; i < curDayCount; i++) {
                     let tmpTime = new Date(time.getFullYear(), time.getMonth(), i + 1);
@@ -121,7 +122,7 @@
                 this.show = false;
                 this.now = new Date(this.date[index].time);
                 this.value = this.stringify();
-                console.log(this.value)
+
                 this.$store.state.dateValue = this.value;
                 this.$store.state.dateFirstBool = true
                 this.$store.state.dateSecondBool = true
