@@ -4,9 +4,9 @@
       v-model="slider.value"
       :data="slider.data"
       :range="slider.range"
-      :processStyle="{ backgroundColor: '#d8d8d8' }"
+      :labelStyles="{ color: '#003300', backgroundColor: '#003300' }"
+      :processStyle="{ backgroundColor: 'green' }"
       @callbackRange="callbackRange">
-      
     </VueSlideBar>
   </div>
 </template>
@@ -56,14 +56,15 @@ export default {
             isHide: true
           },
           {
-            label: '02:00'
-          },
-          {
-            label: '03:00',
+            label: '02:00',
             isHide: true
           },
           {
-            label: '04:00'
+            label: '03:00'
+          },
+          {
+            label: '04:00',
+            isHide: true
           },
           {
             label: '05:00',
@@ -77,14 +78,16 @@ export default {
             isHide: true
           },
           {
-            label: '08:00'
-          },
-          {
-            label: '09:00',
+            label: '08:00',
             isHide: true
           },
           {
-            label: '10:00'
+            label: '09:00'
+            
+          },
+          {
+            label: '10:00',
+            isHide: true
           },
           {
             label: '11:00',
@@ -98,14 +101,15 @@ export default {
             isHide: true
           },
           {
-            label: '14:00'
-          },
-          {
-            label: '15:00',
+            label: '14:00',
             isHide: true
           },
           {
-            label: '16:00'
+            label: '15:00'            
+          },
+          {
+            label: '16:00',
+            isHide: true
           },
           {
             label: '17:00',
@@ -119,18 +123,18 @@ export default {
             isHide: true
           },
           {
-            label: '20:00'
-          },
-          {
-            label: '21:00',
+            label: '20:00',
             isHide: true
           },
           {
-            label: '22:00'
+            label: '21:00'
           },
           {
-            label: '23:00',
+            label: '22:00',
             isHide: true
+          },
+          {
+            label: '23:00'
           },
         ]
       }
@@ -150,15 +154,17 @@ export default {
 <style>
     #slidebar{
         position: fixed;
-        background-color: black;
+        background-color: white;
         opacity: 0.8;
         margin: collapse;
-        margin-left: 25vw;
-        margin-right: 25vw;
+        margin-left: min(250px);
         width: 50vw;
         height: 10vh;
-        top: 0;
+        top: 10px;
         padding-left: 20px;  
         padding-right: 20px;   
+        border-radius: 15px;
+        border: 3px solid green;
+        box-shadow: 5px 8px rgba(0,0,0,0.51);
     }
 </style>

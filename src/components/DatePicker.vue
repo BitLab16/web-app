@@ -44,14 +44,14 @@
         props: {
             width: { type: String, default: '238px' },
             readonly: { type: Boolean, default: false },
-            value: { type: String, default: '' },
+            value: { type: String, default: new Date().toISOString().slice(0, 10) },
             format: { type: String, default: 'YYYY-MM-DD' },
             name: { type: String, default: '' }
         },
         data () {
             return {
                 show: false,
-                days: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                days: [ 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
                 months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 date: [],
                 now: new Date()
@@ -72,10 +72,10 @@
             update () {
                 var arr = [];
                 var time = new Date(this.now);
-                time.setMonth(time.getMonth(), 1);           // the first day
+                time.setMonth(time.getMonth(), 1);         // the first day
                 var curFirstDay = time.getDay();
                 curFirstDay === 0 && (curFirstDay = 7);
-                time.setDate(0);                             // the last day
+                time.setDate(0);                      // the last day
                 var lastDayCount = time.getDate();
                 for (let i = curFirstDay; i > 0; i--) {
                     arr.push({
@@ -83,10 +83,11 @@
                         time: new Date(time.getFullYear(), time.getMonth(), lastDayCount - i + 1),
                         status: 'date-pass'
                     });
+                    console.log(arr)
                 }
                 time.setMonth(time.getMonth() + 2, 0);       // the last day of this month
                 var curDayCount = time.getDate();
-                time.setDate(1);                             // fix bug when month change
+                time.setDate(1);                 // fix bug when month change
                 var value = this.value || this.stringify(new Date());
                 for (let i = 0; i < curDayCount; i++) {
                     let tmpTime = new Date(time.getFullYear(), time.getMonth(), i + 1);
@@ -121,7 +122,7 @@
                 this.show = false;
                 this.now = new Date(this.date[index].time);
                 this.value = this.stringify();
-                console.log(this.value)
+
                 this.$store.state.dateValue = this.value;
                 this.$store.state.dateFirstBool = true
                 this.$store.state.dateSecondBool = true
@@ -166,7 +167,8 @@
 <style scoped>
 .datetime-picker {
     position: fixed;
-    top: 0px;
+    top: 10px;
+    left: 5px;
     display: inline-block;
     font-family: "Segoe UI","Lucida Grande",Helvetica,Arial,"Microsoft YaHei";
     -webkit-font-smoothing: antialiased;
@@ -181,7 +183,10 @@
     height: 30px;
     outline: 0 none;
     border: 1px solid #ccc;
-    font-size: 13px;
+    border-radius: 15px;
+    font-size: 15px;
+    text-align: center;
+    font-weight: bold;
 }
 .datetime-picker .picker-wrap {
     position: absolute;
@@ -190,7 +195,8 @@
     height: 280px;
     margin-top: 2px;
     background-color: #fff;
-    box-shadow: 0 0 6px #ccc;
+    box-shadow: 5px 7px rgba(0,0,0,0.51);
+    border-radius: 0px 0px 5px 5px;
 }
 .datetime-picker table {
     width: 100%;
@@ -217,23 +223,27 @@
 }
 .datetime-picker td:hover {
     background-color: #f0f0f0;
+    border-radius: 20px;
 }
 .datetime-picker td.date-pass, .datetime-picker td.date-future {
     color: #aaa;
 }
 .datetime-picker td.date-active {
-    background-color: #ececec;
-    color: #3bb4f2;
+    background-color: green;
+    color: white;
+    border-radius: 20px;
 }
 .datetime-picker .date-head {
-    background-color: #3bb4f2;
+    background-color: green;
     text-align: center;
     color: #fff;
     font-size: 14px;
+    
 }
 .datetime-picker .date-days {
-    color: #3bb4f2;
+    color: green;
     font-size: 14px;
+    border-radius: 5px;
 }
 .datetime-picker .show-year {
     display: inline-block;
@@ -254,6 +264,6 @@
 }
 .datetime-picker .btn-prev:hover,
 .datetime-picker .btn-next:hover {
-    background: rgba(16, 160, 234, 0.5);
+    background: rgb(29, 150, 13);
 }
 </style>
