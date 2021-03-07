@@ -39,7 +39,7 @@ export default {
   methods: {
     async load() {
       if (data != undefined) return;
-      const res = await fetch("http://localhost:3000/coordinates");
+      const res = await fetch("http://localhost:5000/coordinates");
       data = await res.json();
     },
     async getData() {
