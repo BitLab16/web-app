@@ -38,22 +38,8 @@ export default {
   methods: {
     async load() {
       console.log("Points::load()" + this.$store.state.dateSecondBool);
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      headers.append('Accept', 'application/json');
-      headers.append('Access-Control-Allow-Origin', "*");
-      headers.append('Access-Control-Allow-Credentials', 'true');
-      const request = new Request(
-        "http://localhost:5000/points/time/"+dateValue,
-        {
-          method: "GET",
-          headers,
-          mode: "cors",
-          cache: "default"
-        }
-      );
       console.log(dateValue);
-      const res = await fetch(request);
+      const res = await fetch("http://localhost:5000/points/time/"+dateValue);
       data = await res.json();
     },
     async getData() {
@@ -73,13 +59,10 @@ export default {
         data[i].time = hh+":00";
         data[i].lat = "45.397959";
         data[i].lng = "11.87721";
-        data[i].flow = "10"; /// TODO
         if(data[i].time==sliderValue && data[i].date==dateValue) {
           this.punti.push(data[i]);
         }
-      }     
-      //console.log("Points:getData slidervalue: " + sliderValue)
-      //console.log("Points:getData punti: " + JSON.stringify(this.punti))
+      }
     },
   }
 }
