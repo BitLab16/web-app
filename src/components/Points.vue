@@ -39,12 +39,9 @@ export default {
     async load() {
       console.log("Points::load()" + this.$store.state.dateSecondBool);
       const headers = new Headers();
-      headers.append(
-        "Authorization"
-      );
       headers.append('Content-Type', 'application/json');
       headers.append('Accept', 'application/json');
-      headers.append('Access-Control-Allow-Origin', 'http://localhost:5000');
+      headers.append('Access-Control-Allow-Origin', "*");
       headers.append('Access-Control-Allow-Credentials', 'true');
       const request = new Request(
         "http://localhost:5000/points/time/"+dateValue,
