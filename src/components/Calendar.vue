@@ -12,7 +12,7 @@ export default {
    },
    data() {
        return {
-           date: new Date().toISOString().slice(0, 10) ,
+           date: new Date('2019-07-27').toISOString().slice(0, 10) ,
       };
    },
    methods: {

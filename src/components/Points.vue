@@ -26,8 +26,7 @@ export default {
       setTimeout(f, 100);
       if (! this.$store.state.secondBoolean && !this.$store.state.dateSecondBool) return;
       this.$store.state.secondBoolean = false;
-      this.$store.state.dateSecondBool = false
-      console.log("STORE TRY1" + this.$store.state.sliderValue);
+      this.$store.state.dateSecondBool = false;
       sliderValue = this.$store.state.sliderValue
       dateValue = this.$store.state.dateValue
       this.getData();
@@ -38,8 +37,9 @@ export default {
   },
   methods: {
     async load() {
-      if (data != undefined) return;
-      const res = await fetch("http://localhost:5000/coordinates");
+      console.log("Points::load()" + this.$store.state.dateSecondBool);
+      console.log(dateValue);
+      const res = await fetch("http://localhost:3000/points");
       data = await res.json();
     },
     async getData() {
@@ -48,6 +48,18 @@ export default {
       
       this.punti = [];
       for(let i=0; i<data.length; i++) {
+        var OGGI = new Date(data[i].detectionTime);
+        var mm = ""+(OGGI.getMonth() + 1);
+        if (mm < 10) mm = '0'+mm;
+        var gg = ""+(OGGI.getDate() + 0);
+        if (gg < 10) gg = '0'+gg;
+        var hh = OGGI.getHours();
+        if (hh < 10) hh = '0'+hh;
+        data[i].date = OGGI.getFullYear() + '-' + mm + '-' + gg;
+        data[i].time = hh+":00";
+        data[i].lat = "45.397959";
+        data[i].lng = "11.87721";
+        data[i].flow = "10"; /// TODO
         if(data[i].time==sliderValue && data[i].date==dateValue) {
           this.punti.push(data[i]);
         }
