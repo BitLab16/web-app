@@ -48,7 +48,7 @@ export default {
     },
     maxIntensity: {
       type: Number,
-      default: 50
+      default: 5
     }
   },
   methods: {

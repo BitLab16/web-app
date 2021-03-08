@@ -39,7 +39,7 @@ export default {
     async load() {
       console.log("Points::load()" + this.$store.state.dateSecondBool);
       console.log(dateValue);
-      const res = await fetch("http://localhost:3000/points");
+      const res = await fetch("http://localhost:5000/points/time/"+dateValue);
       data = await res.json();
     },
     async getData() {
