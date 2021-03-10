@@ -16,10 +16,12 @@
 
 .year-month-wrapper{
     background-color: var(--border-color-1);
-    border-radius: 15px;
+    border-radius: 5px;
 }
 
   input{
+    text-align: center;
+    font-size: 20px;
     min-width: 226px;
     width:100%;
     height: 30px;
@@ -30,7 +32,7 @@
   }
   .datetime-picker{
     position: fixed;
-    top: 40px;
+    top: 35px;
   }
   .calender-div{
     min-width: 270px;
@@ -38,7 +40,7 @@
     background: #FFF;
     position: absolute;
     display: inline-block;
-    left: 0;
+    left: 16px;
     top: 35px;
     color: #444;
     font-size: 14px;
@@ -75,6 +77,7 @@
     color: white;
     font-weight: 900;
     display: inline-block;
+    border-radius: 5px;
   }
   .nav-l:hover, .nav-r:hover {
     background-color: #dc3c00;
@@ -105,65 +108,6 @@
     display: inline-block;
     color: white;
     padding: 7px 0;
-  }
-  /* .headers>span{
-
-  } */
-  .hour-selector, .minute-selector{
-    width: 30px;
-    display: inline-block;
-    text-align: center;
-    font-weight: bold;
-    position: relative;
-    cursor: pointer;
-  }
-  .time-separator{
-    display: inline-block;
-    font-weight: bold;
-  }
-  .time-picker{
-    margin: 10px
-  }
-  .nav-t, .nav-d{
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .scroll-hider {
-    display: none;
-    vertical-align:top;
-    overflow:hidden;
-    border:0;
-    position: absolute;
-    top: -40px;
-    left: 0;
-    box-shadow: 0 0 3px #333;
-    background-color: white;
-  }
-  .scroll-hider ul {
-    padding:5px;
-    margin:-5px -13px -5px -5px;
-    list-style-type: none;
-    height: 100px;
-    overflow: auto;
-    width:55px;
-    color: #999;
-    overflow-x: hidden;
-  }
-  .showSelector{
-    display:inline-block;
-  }
-  li.active{
-    background-color: var(--border-color-1);
-    color: white;
-  }
-  li{
-    padding: 4px;
-    font-size: 16px;
-    width: 100%;
-    cursor: pointer;
-  }
-  .time-picker{
-    display: inline-block;
   }
   .noDisplay{
     display: none;

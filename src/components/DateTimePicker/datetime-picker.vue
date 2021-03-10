@@ -27,33 +27,6 @@
             </div>
           </div>
         </div>
-        <div class='time-picker' :class='{noDisplay: hideTime}'>
-          <div class='hour-selector' >
-            <div v-on:click='showHourSelector' id='j-hour'>{{periodStyle === 12 && hour > 12 ? hour - 12 : hour}}</div>
-            <div class='scroll-hider' ref='hourScrollerWrapper' :class='{showSelector: hourSelectorVisible}'>
-              <ul ref='hourScroller'>
-                <li v-for="(h, index) in hours" :key="index" :class='{active: index === hourIndex}' v-on:click='setHour(index, true)' >{{h}}</li>
-              </ul>
-            </div>
-          </div>
-          <div class='time-separator'>
-            <span>:</span>
-          </div>
-          <div class='minute-selector' >
-            <div v-on:click='showMinuteSelector' id='j-minute'>{{minute}}</div>
-            <div class='scroll-hider' ref='minuteScrollerWrapper' :class='{showSelector: minuteSelectorVisible}'>
-              <ul ref='minuteScroller'>
-                <li v-for="(m, index) in minutes" :key="index" :class='{active: index === minuteIndex}' v-on:click='setMinute(index, true)'>{{m}}</li>
-              </ul>
-            </div>
-          </div>
-          <div class='time-separator' v-if='periodStyle === 12'>
-            <span>:</span>
-          </div>
-          <div class='minute-selector' v-if='periodStyle === 12'>
-            <div v-on:click='changePeriod'>{{period}}</div>
-          </div>
-        </div>
         <button type='button' v-on:click='clearDate' class='okButton'>Clear</button>
         <button type='button' v-on:click='setDate' class='okButton ok'>OK</button>
       </div>
@@ -122,18 +95,13 @@ export default {
       months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       days: [],
       monthIndex: 0,
-      hourIndex: 0,
-      minuteIndex: 0,
       year: 2017,
       portsHolder: [],
-      minute: '00',
-      hour: '01',
       day: 1,
-      minuteSelectorVisible: false,
-      hourSelectorVisible: false,
-      period: AM,
-      periodStyle: 12
     }
+  },
+  mounted() {
+    this.setDate();
   },
   methods: {
     leftMonth () {
@@ -206,71 +174,6 @@ export default {
         this.day = parseInt(port, 10);
         this.timeStamp = new Date(this.year, this.monthIndex, this.day);
       }
-    },
-    setMinute (index, closeAfterSet) {
-      this.minuteIndex = index
-      this.minute = this.minutes[index]
-      if (closeAfterSet) {
-        this.minuteSelectorVisible = false
-      }
-    },
-    setHour (index, closeAfterSet) {
-      this.hourIndex = index
-      this.hour = this.hours[index]
-      if (closeAfterSet) {
-        this.hourSelectorVisible = false
-      }
-    },
-    showHourSelector () {
-      this.hourSelectorVisible = true
-      this.minuteSelectorVisible = false
-    },
-    showMinuteSelector () {
-      this.minuteSelectorVisible = true
-      this.hourSelectorVisible = false
-    },
-    keyIsDown (event) {
-      let key = event.which || event.keycode
-      if (key === 38) {
-        if (this.minuteSelectorVisible && this.minuteIndex > 0) {
-          this.setMinute(this.minuteIndex - 1, false)
-          this.scrollTopMinute()
-        } else if (this.hourSelectorVisible && this.hourIndex > 0) {
-          this.setHour(this.hourIndex - 1, false)
-          this.scrollTopHour()
-        }
-      } else if (key === 40) {
-        if (this.minuteSelectorVisible && this.minuteIndex < this.minutes.length - 1) {
-          this.setMinute(this.minuteIndex + 1, false)
-          this.scrollTopMinute()
-        } else if (this.hourSelectorVisible && this.hourIndex < this.hours.length - 1) {
-          this.setHour(this.hourIndex + 1, false)
-          this.scrollTopHour()
-        }
-      } else if (key === 13) {
-        this.minuteSelectorVisible = false
-        this.hourSelectorVisible = false
-      }
-    if (this.minuteSelectorVisible || this.hourSelectorVisible) {
-    event.preventDefault()
-    this.minuteSelectorVisible = false
-        this.hourSelectorVisible = false
-    }
-    },
-    scrollTopMinute () {
-      let mHeight = this.$refs.minuteScroller.scrollHeight
-      let wHeight = this.$refs.minuteScrollerWrapper.clientHeight
-      let top = mHeight * (this.minuteIndex / (this.minutes.length - 1)) - (wHeight / 2)
-      this.$refs.minuteScroller.scrollTop = top
-    },
-    scrollTopHour () {
-      let mHeight = this.$refs.hourScroller.scrollHeight
-      let wHeight = this.$refs.hourScrollerWrapper.clientHeight
-      let top = mHeight * (this.hourIndex / (this.hours.length - 1)) - (wHeight / 2)
-      this.$refs.hourScroller.scrollTop = top
-    },
-    changePeriod () {
-      this.period = this.period === AM ? PM : AM
     },
     calendarClicked (event) {
       if (event.target.id !== 'j-hour' && event.target.id !== 'j-minute') {
