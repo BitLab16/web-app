@@ -62,6 +62,8 @@ export default {
           weight: points.flow}))    
     },
     update_map() {
+      // TODO:
+      // togliere vecchio layer della heatmap
       this.$gmapApiPromiseLazy().then(() => {
         this.$heatmap = new google.maps.visualization.HeatmapLayer({
           data: this.pointsGenerator(),
