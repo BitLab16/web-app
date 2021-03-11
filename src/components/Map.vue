@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="map">
         <br/><br/><br/><br/><br/><br/><br/>
         <p>ciao {{data}} </p>
 
