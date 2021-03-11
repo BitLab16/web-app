@@ -6,11 +6,22 @@
     </div>
 </template>
 
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPjpdiS-hafI9F8ap5kegUFu6exQ4fElY&libraries=visualization&callback=initMap">
+</script>
+
 <script>
+const bounds= {
+    north: 45.444315,
+    south: 45.362051,
+    west: 11.825627,
+    east: 11.948540,
+},
 export default {
   name: 'Map',
   props: {
-      data: Object,
+    data: Object,
+
   },
   components: {
   },

@@ -29,6 +29,10 @@ export default {
     updatedDatePicker(newDate) {
       // console.log("App::updatedDatePicker value received date: " + newDate);
       this.data_selezionata = newDate;
+      
+      //TODO QUI:
+      // se la data è gia presente salta,
+      // ma se è oggi ricarica comunque così aggiorna
       this.fetchData();
     },
     updatedTimePicker(newTime) {
@@ -38,9 +42,6 @@ export default {
     },
     async fetchData() {
       console.log("App::fetchData");
-      //TODO QUI:
-      // se la data è gia presente salta,
-      // ma se è oggi ricarica comunque così aggiorna
       
       //ricevo i dati della data selezionata
       const dati_ricevuti_grezzi = await (await fetch("http://localhost:5000/points"/*"time/" + this.data_selezionata*/)).json();
@@ -58,6 +59,23 @@ export default {
 
 
 <!--
+
+var OGGI = new Date(data[i].detectionTime);
+        var mm = ""+(OGGI.getMonth() + 1);
+        if (mm < 10) mm = '0'+mm;
+        var gg = ""+(OGGI.getDate() + 0);
+        if (gg < 10) gg = '0'+gg;
+        var hh = OGGI.getHours();
+        if (hh < 10) hh = '0'+hh;
+        data[i].date = OGGI.getFullYear() + '-' + mm + '-' + gg;
+        data[i].time = hh+":00";
+        data[i].lat = "45.397959";
+        data[i].lng = "11.87721";
+        if(data[i].time==sliderValue && data[i].date==dateValue) {
+          this.punti.push(data[i]);
+        }
+
+
 FORMAT THIS.DATA
 {
   "2019-01-01": [
