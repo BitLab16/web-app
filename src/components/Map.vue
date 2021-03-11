@@ -1,9 +1,7 @@
 <template>
-    <div>
-        <br/><br/><br/><br/><br/><br/><br/>
-        <p>ciao {{data}} </p>
-
-    </div>
+  <div id="map" 
+    ref="heatmap">
+  </div>
 </template>
 
 <script async
@@ -11,40 +9,70 @@
 </script>
 
 <script>
+
+import '../assets/sytle/components/Map.css';
+
 const bounds= {
     north: 45.444315,
     south: 45.362051,
     west: 11.825627,
     east: 11.948540,
-},
+};
 export default {
   name: 'Map',
   props: {
-    data: Object,
+    /*ref alla struttura dati totale di App!*/
+    data_selezionata: "",
+    orario_selezionato: "",
+
+    /*della mappa*/
+    map_bounds: {
+      north: 45.444315,
+      south: 45.362051,
+      west: 11.825627,
+      east: 11.948540
+    },
+    lat: { type: Number, default: 45.407588 },
+    lng: { type: Number, default: 11.877029 },
+    initialZoom: { type: Number, default: 14 },
+    mapTypeId: { type: String, default: 'roadmap' },
+    data: { type: Object, required: true },
+
+    /*del punto*/
+    opacity: { type: Number, default: 1 },
+    radius: { type: Number, default:  15 },
+    maxIntensity: { type: Number, default: 60 },
 
   },
-  components: {
-  },
-  created() {
-      //TODO:
-      // mettere la mappa con API google
-      // chiamare update_map affinchè si popoli la prima heatmap
-  },
-  updated() {
+  mounted() {
+    this.$gmapApiPromiseLazy().then(()=> {
+      this.$mapObject = new google.maps.Map(this.$refs.heatmap, {
+        zoom: this.initialZoom,
+        center: { lat: this.lat, lng: this.lng },
+        restriction: this.map_bounds,
+        mapTypeId: this.mapTypeId,
+      })
+    });
   },
   methods: {
-      update_map() {
-          console.log("UPDATED_MAP::" + JSON.stringify(this.data).substr(0,400))
-          //TODO:
-          // in funzione di data_selezionata e orario_selezionato
-          // creare il nuovo array di dati da visualizzare e applicarla
-          // chiama setMap(dati_per_nuova_heatmap) per applicarli
-      },
-      setMap(/*dati_nuova_heatmap*/) {
-          //TODO:
-          // in funzione di dati_nuova_heatmap
-          // mettere la nuova heatmap con API google
-      }
+    pointsGenerator() {
+      var points = this.data[this.data_selezionata][this.orario_selezionato];
+      return points.map(points => ({
+          location: new google.maps.LatLng(points.lat, points.lng),
+          weight: points.flow}))    
+    },
+    update_map() {
+      this.$gmapApiPromiseLazy().then(() => {
+        this.$heatmap = new google.maps.visualization.HeatmapLayer({
+          data: this.pointsGenerator(),
+          map: this.$mapObject,
+          opacity: this.opacity,
+          radius: this.radius,
+          maxIntensity: this.maxIntensity,
+        })
+        this.$heatmap.setMap(this.$mapObject);
+      });
+    }
   }
 }
 </script>

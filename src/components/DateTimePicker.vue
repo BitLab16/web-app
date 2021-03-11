@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="calendar">
-            <datetime format="YYYY/MM/DD" width="300px" @input="updatedCalendar" firstDayOfWeek="1" />
+            <datetime format="YYYY-MM-DD" width="300px" @input="updatedCalendar" firstDayOfWeek="1" />
         </div>
         <div id="slidebar">
             <VueSlideBar
@@ -70,12 +70,9 @@ export default {
   },
   methods: {
     updatedCalendar(newDate) {
-      newDate = (""+newDate).replace(/\//g, '-');
-      console.log("DatePicker::UpdatedCalendar val received::" + newDate);
       this.$emit("pickedDate", newDate);
     },
     updatedSlider(newTime) {
-      console.log("DatePicker::updatedSlider new val: " + newTime.label );
       this.$emit("pickedTime", newTime.label);
     }
   },
