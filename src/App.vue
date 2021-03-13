@@ -48,9 +48,26 @@ export default {
       var date = new Date();
       return date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
     },
+    received_data_is_valid(received_data) {
+      //TODO: testare se i dati sono validi!
+      // per il momento return true
+      return Object.keys(received_data).length !== 0;
+    },
     async fetchData() {
       //ricevo i dati della data selezionata
-      const dati_ricevuti_grezzi = await (await fetch("http://localhost:3000/points"/*"time/" + this.data_selezionata*/)).json();
+      const dati_ricevuti_grezzi = await (
+        await fetch("http://localhost:3000/points"/*"time/" + this.data_selezionata*/)
+          .catch( error => {
+            //TODO: sistemare il caso in cui non ricevo dati!
+            alert("errore nel fetch");
+            console.error("Errore nel fetch " + error);
+          } )
+      ).json();
+      if ( ! this.received_data_is_valid(dati_ricevuti_grezzi) ) {
+        //TODO: cosa faccio qui?
+        console.error ("Errore dati ricevuti non validi");
+        return;
+      }
       var dati_data_selezionata = {};
       for(let i=0; i < dati_ricevuti_grezzi.length; i++) {
         var nuovo_dato = {}
