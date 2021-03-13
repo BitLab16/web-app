@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "test:unit": "vue-cli-service test:unit --coverage",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -51,6 +51,21 @@
         }
       }
     ]
+  },
+  "jest": {
+    "codeCoverage": true,
+    "collectCoverageFrom": [
+      "**/*.{js,vue}",
+      "!**/node_modules/**"
+    ],
+    "testPathIgnorePatterns": [
+      "src/components/DateTimePicker/"
+    ],
+    "coverageReporters": [
+      "html",
+      "text-summary"
+    ],
+    "coverageProvider": "babel"
   },
   "browserslist": [
     "> 1%",
