@@ -28,11 +28,6 @@ export default {
       data: {}
     }
   },
-  computed: {
-    points() {
-      return this.data[this.data_selezionata][this.orario_selezionato];
-    }
-  },
   methods: {
     updatedDatePicker(newDate) {
       this.data_selezionata = newDate;
@@ -65,9 +60,12 @@ export default {
       ).json();
       if ( ! this.received_data_is_valid(dati_ricevuti_grezzi) ) {
         //TODO: cosa faccio qui?
-        console.error ("Errore dati ricevuti non validi");
+        console.error ("Errore dati ricevuti non validi!");
         return;
       }
+      this.parseDataAndUpdateMap(dati_ricevuti_grezzi);
+    },
+    parseDataAndUpdateMap(dati_ricevuti_grezzi) {
       var dati_data_selezionata = {};
       for(let i=0; i < dati_ricevuti_grezzi.length; i++) {
         var nuovo_dato = {}
