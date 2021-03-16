@@ -40,17 +40,32 @@ describe('App.vue', () => {
     .toBe( true );
   });
   test("dati non ricevuti fetch", async (done) => {
-    wrapper.vm.$refs.Map.update_map = jest.fn().mockImplementation(() => {});
     var data_clone;
     wrapper.vm.parseDataAndUpdateMap = jest.fn().mockImplementation(
-      data => data_clone = data
+      data => data_clone = data 
     );
+    wrapper.vm.received_data_is_valid = jest.fn().mockImplementation(
+      () => true
+    )
     await wrapper.vm.fetchData();
     var jsonDataObj2 = jsonDataObj;
     jsonDataObj2.m = 2;
+    console.log(data_clone)
+    console.log(jsonDataObj2)
     expect(data_clone).toBe(jsonDataObj2);
-    expect(wrapper.vm.$refs.Map.update_map).toHaveBeenCalledTimes(2);
+    
     expect(wrapper.vm.parseDataAndUpdateMap).toHaveBeenCalled();
+    done();
+  });
+  test("dati ricevuti non validi errore fetch", async (done) => {
+    wrapper.vm.received_data_is_valid = jest.fn().mockImplementation(
+      () => false
+    )
+    wrapper.vm.parseDataAndUpdateMap = jest.fn().mockImplementation(
+      () => {}
+    );
+    await wrapper.vm.fetchData();
+    expect(wrapper.vm.parseDataAndUpdateMap).toHaveBeenCalledTimes(0);
     done();
   });
 })
