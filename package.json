@@ -13,8 +13,8 @@
     "core-js": "^3.9.1",
     "vue": "^2.6.12",
     "vue-slide-bar": "^1.2.0",
-    "vuejs-datetimepicker": "^1.1.13",
-    "vue2-google-maps": "^0.10.7"
+    "vue2-google-maps": "^0.10.7",
+    "vuejs-datetimepicker": "^1.1.13"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.11",

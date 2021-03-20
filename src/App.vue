@@ -25,7 +25,7 @@ export default {
     return {
       data_selezionata: "",
       orario_selezionato: "", 
-      data: {}
+      data: {},
     }
   },
   methods: {
