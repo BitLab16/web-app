@@ -36,7 +36,8 @@ describe('App.vue', () => {
   test("controlla che data sia ben formato", () => {
     expect( wrapper.vm.received_data_is_valid( {} ) )
     .toBe( false );
-    expect( wrapper.vm.received_data_is_valid( {"2019":{}} ) )
+    //SCRIVERE TUTTI I CASI FALSE??
+    expect( wrapper.vm.received_data_is_valid( {"2019-01-01":{"18:00":[]}} ) )
     .toBe( true );
   });
   test("dati non ricevuti fetch", async (done) => {
@@ -46,12 +47,12 @@ describe('App.vue', () => {
     );
     wrapper.vm.received_data_is_valid = jest.fn().mockImplementation(
       () => true
-    )
+    );
     await wrapper.vm.fetchData();
     var jsonDataObj2 = jsonDataObj;
     jsonDataObj2.m = 2;
-    console.log(data_clone)
-    console.log(jsonDataObj2)
+    console.log(data_clone);
+    console.log(jsonDataObj2);
     expect(data_clone).toBe(jsonDataObj2);
     
     expect(wrapper.vm.parseDataAndUpdateMap).toHaveBeenCalled();
@@ -60,7 +61,7 @@ describe('App.vue', () => {
   test("dati ricevuti non validi errore fetch", async (done) => {
     wrapper.vm.received_data_is_valid = jest.fn().mockImplementation(
       () => false
-    )
+    );
     wrapper.vm.parseDataAndUpdateMap = jest.fn().mockImplementation(
       () => {}
     );
