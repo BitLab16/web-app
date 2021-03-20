@@ -123,18 +123,20 @@ FORMAT THIS.DATA
   ------
 
 
-  "2019-01-02": [
+  "ID"(OPPURE LAT E LNG): [
     {
-        "time": "18:00",
+        "detectionTime": "2019-07-27T00:00:00.000+00:00",
         "lat": 45.397959,
         "lng": 11.87721,
         "flow": 1
+        "dati vari....."
     },
     {
-        "time": "18:00",
+        "detectionTime": "2019-07-27T00:00:00.000+00:00",
         "lat": 45.397959,
         "lng": 11.87721,
         "flow": 1
+        "dati vari....."
     }
   ]
 }
