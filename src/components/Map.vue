@@ -1,8 +1,7 @@
 <template>
-  <GmapMap id="map" 
+  <div id="map" 
     ref="heatmap">
-    <GmapMarker v-for="(item, key) in markers" :key="key" :position="getPosition(item)" />
-  </GmapMap>
+  </div>
 </template>
 
 <script async
@@ -19,29 +18,17 @@ const bounds= {
     west: 11.825627,
     east: 11.948540,
 };
+
 export default {
   name: 'Map',
-  data () {
+  data() {
     return {
-      markers: {
-        0: {
-          full_name: 'Erich  Kunze',
-          lat: '45.397959',
-          lng: '11.87721',
-        },
-        1: {
-          full_name: 'Delmer Olson',
-          lat: '45.397959',
-          lng: '11.87721',
-        }
-      }
     }
   },
   props: {
     /*ref alla struttura dati totale di App!*/
     data_selezionata: "",
     orario_selezionato: "",
-
     /*della mappa*/
     map_bounds: {
       north: 45.444315,
@@ -70,16 +57,11 @@ export default {
         mapTypeId: this.mapTypeId,
       })
     });
+
   },
   methods: {
-    getPosition: function(marker) {
-      return {
-        lat: parseFloat(marker.lat),
-        lng: parseFloat(marker.lng)
-      }
-    },
     pointsGenerator() {
-      var points;
+      var points
       try {
         points = this.data[this.data_selezionata][this.orario_selezionato];
       } catch (error) {
