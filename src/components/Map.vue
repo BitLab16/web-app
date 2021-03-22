@@ -18,18 +18,14 @@ const bounds= {
     west: 11.825627,
     east: 11.948540,
 };
-const myLatLng = { lat: 45.407588, lng: 11.877029 };
 
 export default {
   name: 'Map',
-  data() {
-    return {
-    }
-  },
   props: {
     /*ref alla struttura dati totale di App!*/
     data_selezionata: "",
     orario_selezionato: "",
+
     /*della mappa*/
     map_bounds: {
       north: 45.444315,
@@ -62,7 +58,7 @@ export default {
   },
   methods: {
     pointsGenerator() {
-      var points
+      var points;
       try {
         points = this.data[this.data_selezionata][this.orario_selezionato];
       } catch (error) {
@@ -74,23 +70,41 @@ export default {
           weight: points.flow}))    
     },
     update_map() {
+      
       // TODO:
       // togliere vecchio layer della heatmap
-      this.$gmapApiPromiseLazy().then(() => {
-        
+      this.$gmapApiPromiseLazy().then(() => {       
         this.$heatmap = new google.maps.visualization.HeatmapLayer({ 
         data: this.pointsGenerator(),
-        map: this.$mapObject,
         opacity: this.opacity,
         radius: this.radius,
         maxIntensity: this.maxIntensity,
         })
         this.$heatmap.setMap(this.$mapObject);
+      });
+      
+      this.$gmapApiPromiseLazy().then(() => {
+        var markers = this.data[this.data_selezionata][this.orario_selezionato];
+        for(var i=0; i<markers.length; i++) {
+          this.$marker = new google.maps.Marker({ 
+            position: new google.maps.LatLng(markers[i].lat, markers[i].lng),
+          })
+        } 
+        this.$marker.setMap(this.$mapObject);
+      });
 
-        this.$mapObject = new google.maps.Marker({ 
-          position: myLatLng,
-          map: this.$mapObject
-        })  
+      this.$gmapApiPromiseLazy().then(() => {
+        var infoWindows = this.data[this.data_selezionata][this.orario_selezionato];
+        for(var i=0; i<infoWindows.length; i++) {
+          this.$infoWindows = new google.maps.InfoWindow({ 
+            content: "gygi",
+            
+          })
+        } 
+        this.$infoWindows.setMap(this.$mapObject);
+        this.$marker.addListener("click", () => {
+        this.$infoWindows.open(this.$mapObject, this.$marker);
+      });
       });
       
     }
