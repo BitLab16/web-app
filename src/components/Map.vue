@@ -18,6 +18,7 @@ const bounds= {
     west: 11.825627,
     east: 11.948540,
 };
+const myLatLng = { lat: 45.407588, lng: 11.877029 };
 
 export default {
   name: 'Map',
@@ -56,8 +57,8 @@ export default {
         restriction: this.map_bounds,
         mapTypeId: this.mapTypeId,
       })
+      
     });
-
   },
   methods: {
     pointsGenerator() {
@@ -76,7 +77,8 @@ export default {
       // TODO:
       // togliere vecchio layer della heatmap
       this.$gmapApiPromiseLazy().then(() => {
-        this.$heatmap = new google.maps.visualization.HeatmapLayer({
+        
+        this.$heatmap = new google.maps.visualization.HeatmapLayer({ 
         data: this.pointsGenerator(),
         map: this.$mapObject,
         opacity: this.opacity,
@@ -84,7 +86,13 @@ export default {
         maxIntensity: this.maxIntensity,
         })
         this.$heatmap.setMap(this.$mapObject);
+
+        this.$mapObject = new google.maps.Marker({ 
+          position: myLatLng,
+          map: this.$mapObject
+        })  
       });
+      
     }
   }
 }
