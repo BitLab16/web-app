@@ -103,8 +103,8 @@ export default {
         } 
         this.$infoWindows.setMap(this.$mapObject);
         this.$marker.addListener("click", () => {
-        this.$infoWindows.open(this.$mapObject, this.$marker);
-      });
+          this.$infoWindows.open(this.$mapObject, this.$marker);
+        });
       });
       
     }
