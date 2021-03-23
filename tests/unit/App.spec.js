@@ -1,4 +1,4 @@
-import { shallowMount, mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import App from '@/App.vue'
 import DateTimePicker from '@/components/DateTimePicker'
 
@@ -6,7 +6,7 @@ const jsonDataObj = {
   "ciao": "ciao",
   "m": [1,3]
 }
-global.fetch = jest.fn().mockImplementation( (data) =>
+global.fetch = jest.fn().mockImplementation( () =>
   Promise.resolve({
     catch: () => Promise.resolve( {} ),
     json: () => Promise.resolve( jsonDataObj )
@@ -35,13 +35,27 @@ describe('App.vue', () => {
   });
   test("controlla che data sia ben formato", () => {
     expect( wrapper.vm.received_data_is_valid( {} ) )
-    .toBe( false );
-    //SCRIVERE TUTTI I CASI FALSE??
+    .toBe(false);
     expect( wrapper.vm.received_data_is_valid( {"2019-01-01":{"18:00":[]}} ) )
-    .toBe( true );
+    .toBe(true);
   });
-  test("dati non ricevuti fetch", async (done) => {
-    var data_clone;
+  test("dati non ricevuti nel fetch", async (done) => {
+    wrapper.vm.received_data_is_valid = jest.fn().mockImplementation(
+      () => {}
+    );
+    wrapper.vm.parseDataAndUpdateMap = jest.fn().mockImplementation(
+      () => {}
+    );
+    wrapper.vm.fetch = jest.fn().mockImplementation(
+      () => {}
+    );
+
+    await wrapper.vm.fetchData();
+    await expect(fetch()).rejects.toMatch(wrapper.vm.error);
+    expect(wrapper.vm.received_data_is_valid).toBeFalsy();
+    expect(wrapper.vm.parseDataAndUpdateMap).not.toHaveBeenCalled();
+
+   /* var data_clone;
     wrapper.vm.parseDataAndUpdateMap = jest.fn().mockImplementation(
       data => data_clone = data 
     );
@@ -55,10 +69,10 @@ describe('App.vue', () => {
     console.log(jsonDataObj2);
     expect(data_clone).toBe(jsonDataObj2);
     
-    expect(wrapper.vm.parseDataAndUpdateMap).toHaveBeenCalled();
+    expect(wrapper.vm.parseDataAndUpdateMap).toHaveBeenCalled();*/
     done();
   });
-  test("dati ricevuti non validi errore fetch", async (done) => {
+  test("dati ricevuti nel fetch, ma non validi", async (done) => {
     wrapper.vm.received_data_is_valid = jest.fn().mockImplementation(
       () => false
     );
