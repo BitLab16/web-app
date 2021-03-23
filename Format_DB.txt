@@ -1,47 +1,53 @@
-FORMAT THIS.DATA
+FORMAT INFO
+{
+  "ID1": [
+    "name":"Piazza dei signori",
+    "description":"Una delle piazze più \nimportati di padova",
+    "lat": 45.397959,
+    "lng": 11.87721
+  ]
+  "ID2": [
+    "name":"Piazza dei signori",
+    "description":"Una delle piazze più \nimportati di padova",
+    "lat": 45.397959,
+    "lng": 11.87721
+  ]
+  "ID3": [
+    "name":"Piazza dei signori",
+    "description":"Una delle piazze più \nimportati di padova",
+    "lat": 45.397959,
+    "lng": 11.87721
+  ]
+}
+
+-------------------------
+
+FORMAT TIME
 {
   "2019-01-01": {
     "18:00": [
       {
         "id": 1,
-        "lat": 45.397959,
-        "lng": 11.87721,
         "flow": 1
       },
       {
         "id": 2,
-        "lat": 46.397959,
-        "lng": 12.87721,
         "flow": 50
       },
     ],
     "18:30": [
       {
         "id": 1,
-        "lat": 45.397959,
-        "lng": 11.87721,
         "flow": 40
       },
       {
         "id": 2,
-        "lat": 46.397959,
-        "lng": 12.87721,
         "flow": 10
       },
     ],
   },
 }
 
--------------------------
-
-FORMAT INFO
-{
-  "ID": {
-    "name":"Piazza dei signori",
-    "description":"Una delle piazze più \nimportati di padova",
-    "flow": 1
-  }
-}
 -------------------------
 
 FORMAT GRAFICO
