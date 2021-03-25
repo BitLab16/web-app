@@ -33,25 +33,20 @@ describe('App.vue', () => {
     expect(wrapper.vm.dataOggi())
     .toBe(date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate());
   });
-  test("controlla che data sia ben formato", () => {
-    expect( wrapper.vm.received_data_is_valid( {} ) )
-    .toBe(false);
-    expect( wrapper.vm.received_data_is_valid( {"2019-01-01":{"18:00":[]}} ) )
-    .toBe(true);
+  test("controlla che array dati sia ben formato", () => {
+    wrapper.vm.dati_ricevuti_grezzi = ({'18:00':[]});
+    expect( wrapper.vm.received_data_is_valid(wrapper.vm.dati_ricevuti_grezzi) )
+    .toBeTruthy;
   });
   test("dati non ricevuti nel fetch", async (done) => {
     wrapper.vm.received_data_is_valid = jest.fn().mockImplementation(
-      () => {}
+      () => false
     );
     wrapper.vm.parseDataAndUpdateMap = jest.fn().mockImplementation(
       () => {}
     );
-    wrapper.vm.fetch = jest.fn().mockImplementation(
-      () => {}
-    );
-
     await wrapper.vm.fetchData();
-    await expect(fetch()).rejects.toMatch(wrapper.vm.error);
+    await expect(wrapper.vm.fetch()).rejects.toThrow("ERRORE");
     expect(wrapper.vm.received_data_is_valid).toBeFalsy();
     expect(wrapper.vm.parseDataAndUpdateMap).not.toHaveBeenCalled();
 

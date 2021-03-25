@@ -46,18 +46,23 @@ export default {
     received_data_is_valid(received_data) {
       //TODO: testare se i dati sono validi!
       // per il momento return true
-      if(received_data[0]==this.data_selezionata && received_data[0]) return true;
+      var format_orario = /(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?/;
+      if(received_data[0]==format_orario) return true;
       //return Object.keys(received_data).length !== 0;
     },
     async fetchData() {
       //ricevo i dati della data selezionata
       const dati_ricevuti_grezzi = await (
-        await fetch("http://localhost:3000/points"/*"time/" + this.data_selezionata*/)
-          .catch( error => {
-            //TODO: sistemare il caso in cui non ricevo dati!
-            alert("errore nel fetch");
-            console.error("Errore nel fetch " + error);
-          } )
+        await fetch("http://localhost:3000"/*"time/" + this.data_selezionata*/)
+        .then(function(response) {
+          if (!response.ok) {
+            throw Error("ERRORE!");
+          }
+          return response;
+        })
+        .catch(function(error) {
+          console.log(error);
+        })
       ).json();
       if ( ! this.received_data_is_valid(dati_ricevuti_grezzi) ) {
         //TODO: cosa faccio qui?
