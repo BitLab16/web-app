@@ -36,8 +36,9 @@ export default {
     },
     updatedTimePicker(newTime) {
       this.orario_selezionato = newTime;
-      if (Object.keys(this.data).length !== 0)
+      if (Object.keys(this.data).length !== 0) {
         this.$refs.Map.update_map();
+      }
     },
     dataOggi() {
       var date = new Date();
@@ -69,7 +70,7 @@ export default {
       var dati_data_selezionata = {};
       for(let i=0; i < dati_ricevuti_grezzi.length; i++) {
         var nuovo_dato = {}
-        nuovo_dato.flow = 60;
+        nuovo_dato.flow = dati_ricevuti_grezzi[i].point.flow; 
         nuovo_dato.lat = dati_ricevuti_grezzi[i].point.location.coordinates.lat;
         nuovo_dato.lng = dati_ricevuti_grezzi[i].point.location.coordinates.lng;
         var timestamp = new Date(dati_ricevuti_grezzi[i].detectionTime);

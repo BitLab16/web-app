@@ -67,24 +67,30 @@ export default {
       }
       return points.map(points => ({
           location: new google.maps.LatLng(points.lat, points.lng),
-          weight: points.flow}))    
+          weight: points.flow}))   
     },
     update_map() {
-      
-      // TODO:
-      // togliere vecchio layer della heatmap
-      this.$gmapApiPromiseLazy().then(() => {       
+      this.$gmapApiPromiseLazy().then(() => {
+        if(this.$heatmap) {
+          this.$heatmap.setMap(null);
+        }
         this.$heatmap = new google.maps.visualization.HeatmapLayer({ 
-        data: this.pointsGenerator(),
-        opacity: this.opacity,
-        radius: this.radius,
-        maxIntensity: this.maxIntensity,
+          data: this.pointsGenerator(),
+          opacity: this.opacity,
+          radius: this.radius,
+          maxIntensity: this.maxIntensity,
         })
         this.$heatmap.setMap(this.$mapObject);
-      });
+      })
       
       this.$gmapApiPromiseLazy().then(() => {
-        var markers = this.data[this.data_selezionata][this.orario_selezionato];
+        var markers = []
+        var lunghezza = this.data[this.data_selezionata][this.orario_selezionato].length
+        for(i=0; i<lunghezza; i++) {
+          markers[i]=this.data[this.data_selezionata][this.orario_selezionato][i]
+        }
+        console.log(this.data[this.data_selezionata][this.orario_selezionato][0])
+        console.log("lunghezza "+markers.lenght)
         for(var i=0; i<markers.length; i++) {
           this.$marker = new google.maps.Marker({ 
             position: new google.maps.LatLng(markers[i].lat, markers[i].lng),
@@ -93,21 +99,22 @@ export default {
         this.$marker.setMap(this.$mapObject);
       });
 
-      this.$gmapApiPromiseLazy().then(() => {
+      /*this.$gmapApiPromiseLazy().then(() => {
         var infoWindows = this.data[this.data_selezionata][this.orario_selezionato];
+        console.log(this.data)
         for(var i=0; i<infoWindows.length; i++) {
           this.$infoWindows = new google.maps.InfoWindow({ 
             content: "gygi",
-            
           })
         } 
         this.$infoWindows.setMap(this.$mapObject);
         this.$marker.addListener("click", () => {
           this.$infoWindows.open(this.$mapObject, this.$marker);
         });
-      });
+      });*/
       
-    }
+    },
+    
   }
 }
 </script>
