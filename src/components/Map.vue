@@ -73,6 +73,17 @@ export default {
           location: new google.maps.LatLng(points.lat, points.lng),
           weight: points.flow}))  
     },
+    addContent(marker, i){
+      this.$infoWindows = new google.maps.InfoWindow(
+        //content: "gygi",
+      );
+      google.maps.event.addListener( marker, "click", function(marker, i) {
+        return function() {
+          this.$infoWindows.setContent("gygi")
+          this.$infoWindows.open(this.$marker.get("map"), marker );   
+        }
+      }(marker, i));
+    },
     update_map() {
       this.$gmapApiPromiseLazy().then(() => {
         if(this.$heatmap) {
@@ -96,18 +107,11 @@ export default {
         }
         for(var i=0; i<markers.length; i++) {
           this.$marker = new google.maps.Marker({ 
-            position: new google.maps.LatLng(markers[i].lat, markers[i].lng)
+            position: new google.maps.LatLng(markers[i].lat, markers[i].lng),
+            map: this.$mapObject
           })
-          this.$infoWindows = new google.maps.InfoWindow({ 
-            content: "gygi",
-          })
-          this.$marker.setMap(this.$mapObject);
           saveMarkers.push(this.$marker);
-          saveInfoWindows.push(this.$infoWindows);
-          saveMarkers[i].addListener("click", () => {
-            console.log(saveMarkers[i])
-            saveInfoWindows[i].open(this.$mapObject, saveMarkers[i]);
-          });
+          this.addContent(this.$marker, i);
         } 
       });
 
