@@ -18,6 +18,8 @@ const bounds= {
     west: 11.825627,
     east: 11.948540,
 };
+const saveMarkers = [];
+const saveInfoWindows = [];
 
 export default {
   name: 'Map',
@@ -25,6 +27,9 @@ export default {
     /*ref alla struttura dati totale di App!*/
     data_selezionata: "",
     orario_selezionato: "",
+    data: { type: Object, required: true },
+
+    //points: this.data[this.data_selezionata][this.orario_selezionato],
 
     /*della mappa*/
     map_bounds: {
@@ -37,7 +42,6 @@ export default {
     lng: { type: Number, default: 11.877029 },
     initialZoom: { type: Number, default: 14 },
     mapTypeId: { type: String, default: 'roadmap' },
-    data: { type: Object, required: true },
 
     /*del punto*/
     opacity: { type: Number, default: 1 },
@@ -67,7 +71,7 @@ export default {
       }
       return points.map(points => ({
           location: new google.maps.LatLng(points.lat, points.lng),
-          weight: points.flow}))   
+          weight: points.flow}))  
     },
     update_map() {
       this.$gmapApiPromiseLazy().then(() => {
@@ -84,37 +88,45 @@ export default {
       })
       
       this.$gmapApiPromiseLazy().then(() => {
-        var markers = []
-        var lunghezza = this.data[this.data_selezionata][this.orario_selezionato].length
-        for(i=0; i<lunghezza; i++) {
-          markers[i]=this.data[this.data_selezionata][this.orario_selezionato][i]
+        var markers = this.data[this.data_selezionata][this.orario_selezionato];
+        if(saveMarkers) {
+          for(var i=0; i<saveMarkers.length; i++) {
+            saveMarkers[i].setMap(null);
+          }
         }
-        console.log(this.data[this.data_selezionata][this.orario_selezionato][0])
-        console.log("lunghezza "+markers.lenght)
         for(var i=0; i<markers.length; i++) {
           this.$marker = new google.maps.Marker({ 
-            position: new google.maps.LatLng(markers[i].lat, markers[i].lng),
+            position: new google.maps.LatLng(markers[i].lat, markers[i].lng)
           })
+          this.$infoWindows = new google.maps.InfoWindow({ 
+            content: "gygi",
+          })
+          this.$marker.setMap(this.$mapObject);
+          saveMarkers.push(this.$marker);
+          saveInfoWindows.push(this.$infoWindows);
+          saveMarkers[i].addListener("click", () => {
+            console.log(saveMarkers[i])
+            saveInfoWindows[i].open(this.$mapObject, saveMarkers[i]);
+          });
         } 
-        this.$marker.setMap(this.$mapObject);
       });
 
       /*this.$gmapApiPromiseLazy().then(() => {
         var infoWindows = this.data[this.data_selezionata][this.orario_selezionato];
-        console.log(this.data)
         for(var i=0; i<infoWindows.length; i++) {
           this.$infoWindows = new google.maps.InfoWindow({ 
             content: "gygi",
           })
-        } 
-        this.$infoWindows.setMap(this.$mapObject);
-        this.$marker.addListener("click", () => {
-          this.$infoWindows.open(this.$mapObject, this.$marker);
-        });
+          this.$infoWindows.setMap(this.$mapObject);
+          saveInfoWindows.push(this.$infoWindows);
+        }
+        for(var i=0; i<saveMarkers.length; i++) {
+          saveMarkers[i].addListener("click", () => {
+            saveInfoWindows[i].open(this.$mapObject, saveMarkers[i]);
+          });
+        }
       });*/
-      
     },
-    
   }
 }
 </script>
