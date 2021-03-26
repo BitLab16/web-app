@@ -18,8 +18,8 @@ const bounds= {
     west: 11.825627,
     east: 11.948540,
 };
-const saveMarkers = [];
-const saveInfoWindows = [];
+const markers = [];
+const infoWindows = [];
 
 export default {
   name: 'Map',
@@ -73,16 +73,10 @@ export default {
           location: new google.maps.LatLng(points.lat, points.lng),
           weight: points.flow}))  
     },
-    addContent(marker, i){
-      this.$infoWindows = new google.maps.InfoWindow(
-        //content: "gygi",
-      );
-      google.maps.event.addListener( marker, "click", function(marker, i) {
-        return function() {
-          this.$infoWindows.setContent("gygi")
-          this.$infoWindows.open(this.$marker.get("map"), marker );   
-        }
-      }(marker, i));
+    addInfoWindow(marker, infowindow){
+      google.maps.event.addListener( marker, "click", function() {
+          infowindow.open(this.$mapObject, marker);   
+      });
     },
     update_map() {
       this.$gmapApiPromiseLazy().then(() => {
@@ -99,37 +93,23 @@ export default {
       })
       
       this.$gmapApiPromiseLazy().then(() => {
-        var markers = this.data[this.data_selezionata][this.orario_selezionato];
-        if(saveMarkers) {
-          for(var i=0; i<saveMarkers.length; i++) {
-            saveMarkers[i].setMap(null);
+        var MARKERS = this.data[this.data_selezionata][this.orario_selezionato];
+        if(markers) {
+          for(var i=0; i<markers.length; i++) {
+            markers[i].setMap(null);
           }
         }
-        for(var i=0; i<markers.length; i++) {
-          this.$marker = new google.maps.Marker({ 
-            position: new google.maps.LatLng(markers[i].lat, markers[i].lng),
+        for(var i=0; i<MARKERS.length; i++) {
+          markers[i]= new google.maps.Marker({ 
+            position: new google.maps.LatLng(MARKERS[i].lat, MARKERS[i].lng),
             map: this.$mapObject
           })
-          saveMarkers.push(this.$marker);
-          this.addContent(this.$marker, i);
+          infoWindows[i] = new google.maps.InfoWindow({
+            content: "giiuh"
+          });
+          this.addInfoWindow(markers[i], infoWindows[i]);
         } 
       });
-
-      /*this.$gmapApiPromiseLazy().then(() => {
-        var infoWindows = this.data[this.data_selezionata][this.orario_selezionato];
-        for(var i=0; i<infoWindows.length; i++) {
-          this.$infoWindows = new google.maps.InfoWindow({ 
-            content: "gygi",
-          })
-          this.$infoWindows.setMap(this.$mapObject);
-          saveInfoWindows.push(this.$infoWindows);
-        }
-        for(var i=0; i<saveMarkers.length; i++) {
-          saveMarkers[i].addListener("click", () => {
-            saveInfoWindows[i].open(this.$mapObject, saveMarkers[i]);
-          });
-        }
-      });*/
     },
   }
 }
