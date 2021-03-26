@@ -12,12 +12,6 @@
 
 import '../assets/sytle/components/Map.css';
 
-const bounds= {
-    north: 45.444315,
-    south: 45.362051,
-    west: 11.825627,
-    east: 11.948540,
-};
 const markers = [];
 const infoWindows = [];
 
@@ -29,7 +23,7 @@ export default {
     orario_selezionato: "",
     data: { type: Object, required: true },
 
-    //points: this.data[this.data_selezionata][this.orario_selezionato],
+    //points: {type: Object, default: this.data[this.data_selezionata][this.orario_selezionato]},
 
     /*della mappa*/
     map_bounds: {
@@ -91,9 +85,14 @@ export default {
         })
         this.$heatmap.setMap(this.$mapObject);
       })
-      
+
       this.$gmapApiPromiseLazy().then(() => {
         var MARKERS = this.data[this.data_selezionata][this.orario_selezionato];
+        const icon = {
+          url: "/src/assets/circle.png",
+          scaledSize: new google.maps.Size(50,50),
+          anchor: new google.maps.Point(0, 0)
+        };
         if(markers) {
           for(var i=0; i<markers.length; i++) {
             markers[i].setMap(null);
@@ -101,8 +100,9 @@ export default {
         }
         for(var i=0; i<MARKERS.length; i++) {
           markers[i]= new google.maps.Marker({ 
-            position: new google.maps.LatLng(MARKERS[i].lat, MARKERS[i].lng),
-            map: this.$mapObject
+            position: new google.maps.LatLng(MARKERS[i].lat-0.0015, MARKERS[i].lng),
+            map: this.$mapObject,
+            //icon: icon
           })
           infoWindows[i] = new google.maps.InfoWindow({
             content: "giiuh"
