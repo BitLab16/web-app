@@ -88,11 +88,11 @@ export default {
 
       this.$gmapApiPromiseLazy().then(() => {
         var MARKERS = this.data[this.data_selezionata][this.orario_selezionato];
-        const icon = {
+        /*const icon = {
           url: "/src/assets/circle.png",
           scaledSize: new google.maps.Size(50,50),
           anchor: new google.maps.Point(0, 0)
-        };
+        };*/
         if(markers) {
           for(var i=0; i<markers.length; i++) {
             markers[i].setMap(null);
@@ -100,12 +100,12 @@ export default {
         }
         for(var i=0; i<MARKERS.length; i++) {
           markers[i]= new google.maps.Marker({ 
-            position: new google.maps.LatLng(MARKERS[i].lat-0.0015, MARKERS[i].lng),
+            position: new google.maps.LatLng(MARKERS[i].lat/*-0.0015*/, MARKERS[i].lng),
             map: this.$mapObject,
             //icon: icon
           })
           infoWindows[i] = new google.maps.InfoWindow({
-            content: "giiuh"
+            content: "uhy"
           });
           this.addInfoWindow(markers[i], infoWindows[i]);
         } 
