@@ -93,6 +93,41 @@ export default {
           scaledSize: new google.maps.Size(50,50),
           anchor: new google.maps.Point(0, 0)
         };*/
+        var string = '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">'+
+        '<table id="grafico" class="charts-css column show-heading show-labels show-primary-axis show-data-on-hover">' +
+          '<caption> Flusso persone </caption>' +
+          '<tbody>' +
+            '<tr>' +
+              '<th scope="row"> LUN </th>' +
+              '<td style="--size: calc( 10/ 100 )"> 10 </td>' +
+            '</tr>'+
+            '<tr>'+
+              '<th scope="row"> MAR </th>'+
+              '<td style="--size: calc( 20/ 100 )"> 20 </td>'+
+            '</tr>'+
+            '<tr>'+
+              '<th scope="row"> MER </th>'+
+              '<td style="--size: calc( 30/ 100 )"> 30 </td>'+
+            '</tr>'+
+            '<tr>'+
+              '<th scope="row"> GIO </th>'+
+              '<td style="--size: calc( 40/100 )"> 40 </td>'+
+            '</tr>'+
+            '<tr>'+
+              '<th scope="row"> VEN </th>'+
+              '<td style="--size: calc( 50/ 100 )"> 50 </td>'+
+            '</tr>'+
+            '<tr>'+
+              '<th scope="row"> SAB </th>'+
+              '<td style="--size: calc( 60/ 100 )"> 60 </td>'+
+            '</tr>'+
+            '<tr>'+
+              '<th scope="row"> DOM </th>'+
+              '<td style="--size: calc( 70/ 100 )"> 70 </td>'+
+            '</tr>'+
+          '</tbody>'+
+        '</table>'
+
         if(markers) {
           for(var i=0; i<markers.length; i++) {
             markers[i].setMap(null);
@@ -105,7 +140,7 @@ export default {
             //icon: icon
           })
           infoWindows[i] = new google.maps.InfoWindow({
-            content: "uhy"
+            content: string
           });
           this.addInfoWindow(markers[i], infoWindows[i]);
         } 
