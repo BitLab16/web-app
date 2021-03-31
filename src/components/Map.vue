@@ -72,6 +72,91 @@ export default {
           infowindow.open(this.$mapObject, marker);   
       });
     },
+    async fetchContent () {
+      const infoContent = await (
+        await fetch("http://localhost:3000/points/"/*code*/)
+          .catch( error => {
+            //TODO: sistemare il caso in cui non ricevo dati!
+            alert("errore nel fetch");
+            console.error("Errore nel fetch " + error);
+          } )
+      ).json();
+      return infoContent
+    },
+    /*daysFlow(data) {
+      const mediaFlow = [];
+      
+      for(i=0; i<data[0].gatherings.length; i++) {
+        var date = new Date(data[0].gatherings[i].detectionTime)
+        switch (date.getDay()) {
+          case 0:
+            mediaFlow[0] = data.gathering[i].flow
+            break;
+          case 1:
+            day = "Monday";
+            break;
+          case 2:
+            day = "Tuesday";
+            break;
+          case 3:
+            day = "Wednesday";
+            break;
+          case 4:
+            day = "Thursday";
+            break;
+          case 5:
+            day = "Friday";
+            break;
+          case 6:
+            day = "Saturday";
+        }
+      }
+    },*/
+    createContent(code) {
+      const infoContent = this.fetchContent();
+      //const mediaFlow = this.daysFlow(infoContent);
+    
+      for(let i; i<infoContent[0].gatherings.length; i++) {
+        var string = '<h1>' + infoContent[0].name + '</h1>' +
+          '<h2> Description: </h2>' +
+          //'<p>' + infoContent[0].description + '</p>' +
+          '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">'+
+          '<table id="grafico" class="charts-css column show-heading show-labels show-primary-axis show-data-on-hover">' +
+            '<caption> Flusso di persone </caption>' +
+            '<tbody>' +
+              '<tr>' +
+                '<th scope="row"> LUN </th>' +
+                '<td style="--size: calc( 1/ 100 )"> 10 </td>' +
+              '</tr>'+
+              '<tr>'+
+                '<th scope="row"> MAR </th>'+
+                '<td style="--size: calc( 20/ 100 )"> 20 </td>'+
+              '</tr>'+
+              '<tr>'+
+                '<th scope="row"> MER </th>'+
+                '<td style="--size: calc( 30/ 100 )"> 30 </td>'+
+              '</tr>'+
+              '<tr>'+
+                '<th scope="row"> GIO </th>'+
+                '<td style="--size: calc( 40/100 )"> 40 </td>'+
+              '</tr>'+
+              '<tr>'+
+                '<th scope="row"> VEN </th>'+
+                '<td style="--size: calc( 50/ 100 )"> 50 </td>'+
+              '</tr>'+
+              '<tr>'+
+                '<th scope="row"> SAB </th>'+
+                '<td style="--size: calc( 60/ 100 )"> 60 </td>'+
+              '</tr>'+
+              '<tr>'+
+                '<th scope="row"> DOM </th>'+
+                '<td style="--size: calc( 70/ 100 )"> 70 </td>'+
+              '</tr>'+
+            '</tbody>'+
+          '</table>'
+      }
+      return string;
+    },
     update_map() {
       this.$gmapApiPromiseLazy().then(() => {
         if(this.$heatmap) {
@@ -93,41 +178,6 @@ export default {
           scaledSize: new google.maps.Size(50,50),
           anchor: new google.maps.Point(0, 0)
         };*/
-        var string = '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">'+
-        '<table id="grafico" class="charts-css column show-heading show-labels show-primary-axis show-data-on-hover">' +
-          '<caption> Flusso persone </caption>' +
-          '<tbody>' +
-            '<tr>' +
-              '<th scope="row"> LUN </th>' +
-              '<td style="--size: calc( 10/ 100 )"> 10 </td>' +
-            '</tr>'+
-            '<tr>'+
-              '<th scope="row"> MAR </th>'+
-              '<td style="--size: calc( 20/ 100 )"> 20 </td>'+
-            '</tr>'+
-            '<tr>'+
-              '<th scope="row"> MER </th>'+
-              '<td style="--size: calc( 30/ 100 )"> 30 </td>'+
-            '</tr>'+
-            '<tr>'+
-              '<th scope="row"> GIO </th>'+
-              '<td style="--size: calc( 40/100 )"> 40 </td>'+
-            '</tr>'+
-            '<tr>'+
-              '<th scope="row"> VEN </th>'+
-              '<td style="--size: calc( 50/ 100 )"> 50 </td>'+
-            '</tr>'+
-            '<tr>'+
-              '<th scope="row"> SAB </th>'+
-              '<td style="--size: calc( 60/ 100 )"> 60 </td>'+
-            '</tr>'+
-            '<tr>'+
-              '<th scope="row"> DOM </th>'+
-              '<td style="--size: calc( 70/ 100 )"> 70 </td>'+
-            '</tr>'+
-          '</tbody>'+
-        '</table>'
-
         if(markers) {
           for(var i=0; i<markers.length; i++) {
             markers[i].setMap(null);
@@ -140,7 +190,7 @@ export default {
             //icon: icon
           })
           infoWindows[i] = new google.maps.InfoWindow({
-            content: string
+            content: this.createContent(MARKERS[i].code)
           });
           this.addInfoWindow(markers[i], infoWindows[i]);
         } 

@@ -69,19 +69,22 @@ export default {
     parseDataAndUpdateMap(dati_ricevuti_grezzi) {
       var dati_data_selezionata = {};
       for(let i=0; i < dati_ricevuti_grezzi.length; i++) {
-        var nuovo_dato = {}
-        nuovo_dato.flow = dati_ricevuti_grezzi[i].point.flow; 
-        nuovo_dato.lat = dati_ricevuti_grezzi[i].point.location.coordinates.lat;
-        nuovo_dato.lng = dati_ricevuti_grezzi[i].point.location.coordinates.lng;
-        var timestamp = new Date(dati_ricevuti_grezzi[i].detectionTime);
-        var hh = timestamp.getHours();
-        if (hh < 10) hh = '0'+hh;
-        var min = timestamp.getMinutes();
-        if (min < 10) min = '0'+min;
-        var time = hh+':'+min;
-        if (! dati_data_selezionata[time])
-          dati_data_selezionata[time] = [];
-        dati_data_selezionata[time].push(nuovo_dato);
+        for(let j=0; j< dati_ricevuti_grezzi[i].gatherings.length; j++) {
+          var nuovo_dato = {};
+          nuovo_dato.flow = dati_ricevuti_grezzi[i].gatherings[j].flow; 
+          var timestamp = new Date(dati_ricevuti_grezzi[i].gatherings[j].detectionTime);
+          var hh = timestamp.getHours();
+          if (hh < 10) hh = '0'+hh;
+          var min = timestamp.getMinutes();
+          if (min < 10) min = '0'+min;
+          var time = hh+':'+min;
+          if (! dati_data_selezionata[time])
+            dati_data_selezionata[time] = [];
+          dati_data_selezionata[time].push(nuovo_dato);
+          nuovo_dato.lat = dati_ricevuti_grezzi[i].location.coordinates[0];
+          nuovo_dato.lng = dati_ricevuti_grezzi[i].location.coordinates[1];
+          nuovo_dato.code = dati_ricevuti_grezzi[i].code;
+        }
       }
       this.data[this.data_selezionata] = dati_data_selezionata;
       this.$refs.Map.update_map();
