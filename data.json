@@ -2,6 +2,7 @@
     "points": [
         {
             "name":"Piazza dei signori",
+            "description": "bellaaaaaaa",
             "code":100,
             "location":{
                 "type":"Point",

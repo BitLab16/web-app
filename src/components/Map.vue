@@ -1,6 +1,10 @@
 <template>
   <div id="map" 
     ref="heatmap">
+    <Grafico ref="Grafico"
+      v-bind:string="string"
+      v-on:updateString="string=$event"
+    />
   </div>
 </template>
 
@@ -11,12 +15,20 @@
 <script>
 
 import '../assets/sytle/components/Map.css';
+import Grafico from './Grafico.vue'
 
 const markers = [];
 const infoWindows = [];
 
 export default {
   name: 'Map',
+  components: {Grafico},
+  data() {
+    return {
+      infoContent: [],
+      string: ""
+    }
+  },
   props: {
     /*ref alla struttura dati totale di App!*/
     data_selezionata: "",
@@ -53,6 +65,7 @@ export default {
       })
       
     });
+    this.fetchContent();
   },
   methods: {
     pointsGenerator() {
@@ -72,90 +85,87 @@ export default {
           infowindow.open(this.$mapObject, marker);   
       });
     },
-    async fetchContent () {
-      const infoContent = await (
-        await fetch("http://localhost:3000/points/"/*code*/)
+    async fetchContent (code) {
+      const data = await (
+        await fetch("http://localhost:3000/points"/*code*/)
           .catch( error => {
             //TODO: sistemare il caso in cui non ricevo dati!
             alert("errore nel fetch");
             console.error("Errore nel fetch " + error);
-          } )
+          })
       ).json();
-      return infoContent
+      this.infoContent = data;
     },
-    /*daysFlow(data) {
-      const mediaFlow = [];
+    daysFlow(data) {
+      const mediaFlow = {};
       
-      for(i=0; i<data[0].gatherings.length; i++) {
+      for(let i=0; i<data[0].gatherings.length; i++) {
         var date = new Date(data[0].gatherings[i].detectionTime)
         switch (date.getDay()) {
-          case 0:
-            mediaFlow[0] = data.gathering[i].flow
+          case 0: 
+            mediaFlow[0].push(data.gathering[i].flow);
             break;
           case 1:
-            day = "Monday";
+            mediaFlow[1].push(data.gathering[i].flow);
             break;
           case 2:
-            day = "Tuesday";
+            mediaFlow[2].push(data.gathering[i].flow);
             break;
           case 3:
-            day = "Wednesday";
+            mediaFlow[3].push(data.gathering[i].flow);
             break;
           case 4:
-            day = "Thursday";
+            mediaFlow[4].push(data.gathering[i].flow);
             break;
           case 5:
-            day = "Friday";
+            mediaFlow[5].push(data.gathering[i].flow);
             break;
           case 6:
-            day = "Saturday";
+            mediaFlow[6].push(data.gathering[i].flow);
         }
-      }
-    },*/
-    createContent(code) {
-      const infoContent = this.fetchContent();
-      //const mediaFlow = this.daysFlow(infoContent);
-    
-      for(let i; i<infoContent[0].gatherings.length; i++) {
-        var string = '<h1>' + infoContent[0].name + '</h1>' +
-          '<h2> Description: </h2>' +
-          //'<p>' + infoContent[0].description + '</p>' +
-          '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">'+
-          '<table id="grafico" class="charts-css column show-heading show-labels show-primary-axis show-data-on-hover">' +
-            '<caption> Flusso di persone </caption>' +
-            '<tbody>' +
-              '<tr>' +
-                '<th scope="row"> LUN </th>' +
-                '<td style="--size: calc( 1/ 100 )"> 10 </td>' +
-              '</tr>'+
-              '<tr>'+
-                '<th scope="row"> MAR </th>'+
-                '<td style="--size: calc( 20/ 100 )"> 20 </td>'+
-              '</tr>'+
-              '<tr>'+
-                '<th scope="row"> MER </th>'+
-                '<td style="--size: calc( 30/ 100 )"> 30 </td>'+
-              '</tr>'+
-              '<tr>'+
-                '<th scope="row"> GIO </th>'+
-                '<td style="--size: calc( 40/100 )"> 40 </td>'+
-              '</tr>'+
-              '<tr>'+
-                '<th scope="row"> VEN </th>'+
-                '<td style="--size: calc( 50/ 100 )"> 50 </td>'+
-              '</tr>'+
-              '<tr>'+
-                '<th scope="row"> SAB </th>'+
-                '<td style="--size: calc( 60/ 100 )"> 60 </td>'+
-              '</tr>'+
-              '<tr>'+
-                '<th scope="row"> DOM </th>'+
-                '<td style="--size: calc( 70/ 100 )"> 70 </td>'+
-              '</tr>'+
-            '</tbody>'+
-          '</table>'
-      }
-      return string;
+      } console.log(mediaFlow)
+    },
+    createContent() {
+      const mediaFlow = this.daysFlow(this.infoContent);
+      console.log(this.infoContent)
+      var string =  '<h1>' + this.infoContent[0].name + '</h1>' +
+        '<h2> Description: </h2>' +
+        '<p>' + this.infoContent[0].description + '</p>' +
+        '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">'+
+        '<table id="grafico" class="charts-css column show-heading show-labels show-primary-axis show-data-on-hover">' +
+          '<caption> Flusso di persone </caption>' +
+          '<tbody>' +
+            '<tr>' +
+              '<th scope="row"> LUN </th>' +
+              '<td style="--size: calc( 1/ 100 )"> 10 </td>' +
+            '</tr>'+
+            '<tr>'+
+              '<th scope="row"> MAR </th>'+
+              '<td style="--size: calc( 20/ 100 )"> 20 </td>'+
+            '</tr>'+
+            '<tr>'+
+              '<th scope="row"> MER </th>'+
+              '<td style="--size: calc( 30/ 100 )"> 30 </td>'+
+            '</tr>'+
+            '<tr>'+
+              '<th scope="row"> GIO </th>'+
+              '<td style="--size: calc( 40/100 )"> 40 </td>'+
+            '</tr>'+
+            '<tr>'+
+              '<th scope="row"> VEN </th>'+
+              '<td style="--size: calc( 50/ 100 )"> 50 </td>'+
+            '</tr>'+
+            '<tr>'+
+              '<th scope="row"> SAB </th>'+
+              '<td style="--size: calc( 60/ 100 )"> 60 </td>'+
+            '</tr>'+
+            '<tr>'+
+              '<th scope="row"> DOM </th>'+
+              '<td style="--size: calc( 70/ 100 )"> 70 </td>'+
+            '</tr>'+
+          '</tbody>'+
+        '</table>' 
+      return string
     },
     update_map() {
       this.$gmapApiPromiseLazy().then(() => {
@@ -189,8 +199,9 @@ export default {
             map: this.$mapObject,
             //icon: icon
           })
+          //this.fetchContent(MARKERS[i].code);
           infoWindows[i] = new google.maps.InfoWindow({
-            content: this.createContent(MARKERS[i].code)
+            content: this.createContent()
           });
           this.addInfoWindow(markers[i], infoWindows[i]);
         } 
