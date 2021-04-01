@@ -1,10 +1,6 @@
 <template>
   <div id="map" 
     ref="heatmap">
-    <Grafico ref="Grafico"
-      v-bind:string="string"
-      v-on:updateString="string=$event"
-    />
   </div>
 </template>
 
@@ -15,18 +11,15 @@
 <script>
 
 import '../assets/sytle/components/Map.css';
-import Grafico from './Grafico.vue'
 
 const markers = [];
 const infoWindows = [];
 
 export default {
   name: 'Map',
-  components: {Grafico},
   data() {
     return {
-      infoContent: [],
-      string: ""
+      infoContent: []
     }
   },
   props: {
@@ -53,7 +46,6 @@ export default {
     opacity: { type: Number, default: 1 },
     radius: { type: Number, default:  15 },
     maxIntensity: { type: Number, default: 60 },
-
   },
   mounted() {
     this.$gmapApiPromiseLazy().then(()=> {
@@ -63,8 +55,8 @@ export default {
         restriction: this.map_bounds,
         mapTypeId: this.mapTypeId,
       })
-      
     });
+
     this.fetchContent();
   },
   methods: {
@@ -97,71 +89,82 @@ export default {
       this.infoContent = data;
     },
     daysFlow(data) {
-      const mediaFlow = {};
-      
-      for(let i=0; i<data[0].gatherings.length; i++) {
-        var date = new Date(data[0].gatherings[i].detectionTime)
+      var mediaFlow = new Array(7).fill(0);
+      var counter = new Array(7).fill(0);
+      for(let i=0; i<data.gatherings.length; i++) {
+        var date = new Date(data.gatherings[i].detectionTime);
         switch (date.getDay()) {
           case 0: 
-            mediaFlow[0].push(data.gathering[i].flow);
+            counter[0]++
+            mediaFlow[0]+=data.gatherings[i].flow
             break;
           case 1:
-            mediaFlow[1].push(data.gathering[i].flow);
+            counter[1]++
+            mediaFlow[1]+=data.gatherings[i].flow
             break;
           case 2:
-            mediaFlow[2].push(data.gathering[i].flow);
+            counter[2]++
+            mediaFlow[2]+=data.gatherings[i].flow
             break;
           case 3:
-            mediaFlow[3].push(data.gathering[i].flow);
+            counter[3]++
+            mediaFlow[3]+=data.gatherings[i].flow
             break;
           case 4:
-            mediaFlow[4].push(data.gathering[i].flow);
+            counter[4]++
+            mediaFlow[4]+=data.gatherings[i].flow
             break;
           case 5:
-            mediaFlow[5].push(data.gathering[i].flow);
+            counter[5]++
+            mediaFlow[5]+=data.gatherings[i].flow
             break;
           case 6:
-            mediaFlow[6].push(data.gathering[i].flow);
+            counter[6]++
+            mediaFlow[6]+=data.gatherings[i].flow
+            break
         }
-      } console.log(mediaFlow)
+      } 
+      for(var i=0; i<7; i++) {
+        mediaFlow[i]=mediaFlow[i]/counter[i];
+      }
+      return mediaFlow;
     },
     createContent() {
-      const mediaFlow = this.daysFlow(this.infoContent);
-      console.log(this.infoContent)
+      var media = this.daysFlow(this.infoContent[0]);
       var string =  '<h1>' + this.infoContent[0].name + '</h1>' +
         '<h2> Description: </h2>' +
         '<p>' + this.infoContent[0].description + '</p>' +
         '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">'+
         '<table id="grafico" class="charts-css column show-heading show-labels show-primary-axis show-data-on-hover">' +
-          '<caption> Flusso di persone </caption>' +
+          '<caption> Media del flusso di persone </caption>' +
           '<tbody>' +
             '<tr>' +
               '<th scope="row"> LUN </th>' +
-              '<td style="--size: calc( 1/ 100 )"> 10 </td>' +
+              '<td style="--size: calc(' + media[1] + '/ 100 )">' + media[1] + '</td>' +
             '</tr>'+
             '<tr>'+
               '<th scope="row"> MAR </th>'+
-              '<td style="--size: calc( 20/ 100 )"> 20 </td>'+
+              '<td style="--size: calc(' + media[2] + '/ 100 )">' + media[2] + '</td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> MER </th>'+
-              '<td style="--size: calc( 30/ 100 )"> 30 </td>'+
+              '<td style="--size: calc(' + media[3] + '/ 100 )">' + media[3] + '</td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> GIO </th>'+
-              '<td style="--size: calc( 40/100 )"> 40 </td>'+
+              '<td style="--size: calc(' + media[4] + '/100 )">' + media[4] + '</td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> VEN </th>'+
-              '<td style="--size: calc( 50/ 100 )"> 50 </td>'+
+              '<td style="--size: calc( ' + media[5] + '/ 100 )"> ' + media[5] + ' </td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> SAB </th>'+
-              '<td style="--size: calc( 60/ 100 )"> 60 </td>'+
+              '<td style="--size: calc( ' + media[6] + '/ 100 )"> ' + media[6] + ' </td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> DOM </th>'+
-              '<td style="--size: calc( 70/ 100 )"> 70 </td>'+
+              '<td style="--size: calc(' + media[0] + '/ 100 )"> ' + media[0] + ' </td>'+
             '</tr>'+
           '</tbody>'+
         '</table>' 
@@ -180,7 +183,6 @@ export default {
         })
         this.$heatmap.setMap(this.$mapObject);
       })
-
       this.$gmapApiPromiseLazy().then(() => {
         var MARKERS = this.data[this.data_selezionata][this.orario_selezionato];
         /*const icon = {
