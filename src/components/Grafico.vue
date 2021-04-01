@@ -15,15 +15,29 @@ export default {
   data() {
     return {
         infoContent: [],
-        infoWindows: []
+        infoWindow: Object
     }
   },
+  mounted() {
+    this.$gmapApiPromiseLazy().then(() => {
+      this.infoWindow = new google.maps.InfoWindow({ content: "" });
+    });
+    this.$gmapApiPromiseLazy().then(() => {
+      var f = () => {
+        if (this.markers.length === 0 || this.infoWindow === undefined) {
+          console.log(1)
+          setTimeout(f, 5);
+      }
+        for (let i = 0; i < this.markers.length; i++) {
+          google.maps.event.addListener( this.markers[i], "click", function() {
+            this.infoWindow.open(this.$mapObject, marker);
+          });
+        }
+      };
+      f();
+    });
+  },
   methods: {
-    addInfoWindow(marker, infowindow){
-      google.maps.event.addListener( marker, "click", function() {
-          infowindow.open(this.$mapObject, marker);
-      });
-    },
     async fetchContent (code) {
       const data = await (
         await fetch("http://localhost:3000/points"/*code*/)
@@ -122,17 +136,6 @@ export default {
           '</tbody>'+
         '</table>' 
       return string
-    },
-    updateInfoWindow(flow_attuale) {
-        this.$gmapApiPromiseLazy().then(() => {
-          //this.fetchContent(MARKERS[i].code);
-          for (let i = 0; i < this.markers.length; i++) {
-            this.infoWindows[i] = new google.maps.InfoWindow({
-                content: this.createContent(flow_attuale)
-            });
-            this.addInfoWindow(this.markers[i], this.infoWindows[i]);
-          }
-        });
     }
   }
 }

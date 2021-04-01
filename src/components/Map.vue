@@ -107,9 +107,6 @@ export default {
                 //icon: icon
               })
             }
-            this.$refs.Grafico.fetchContent(punti_di_un_giorno.code).then(
-              () => {this.$refs.Grafico.updateInfoWindow(2)}
-            );
         })
       }
     },
