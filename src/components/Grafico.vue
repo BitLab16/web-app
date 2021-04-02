@@ -15,22 +15,23 @@ export default {
   data() {
     return {
         infoContent: [],
-        infoWindow: Object
+        infoWindow: Object,
     }
   },
   mounted() {
+    this.fetchContent(231231323123123123123);
     this.$gmapApiPromiseLazy().then(() => {
       this.infoWindow = new google.maps.InfoWindow({ content: "" });
-    });
-    this.$gmapApiPromiseLazy().then(() => {
       var f = () => {
         if (this.markers.length === 0 || this.infoWindow === undefined) {
-          console.log(1)
-          setTimeout(f, 5);
-      }
+          setTimeout(f, 50);
+          return;
+        }
         for (let i = 0; i < this.markers.length; i++) {
-          google.maps.event.addListener( this.markers[i], "click", function() {
-            this.infoWindow.open(this.$mapObject, marker);
+          google.maps.event.addListener( this.markers[i], "click", () => {
+            console.log()
+            this.infoWindow.setContent(this.createContent(i));
+            this.infoWindow.open(this.$mapObject, this.markers[i]);
           });
         }
       };
@@ -38,7 +39,7 @@ export default {
     });
   },
   methods: {
-    async fetchContent (code) {
+    async fetchContent(code) {
       const data = await (
         await fetch("http://localhost:3000/points"/*code*/)
           .catch( error => {
@@ -54,36 +55,8 @@ export default {
       var counter = new Array(7).fill(0);
       for(let i=0; i<data.gatherings.length; i++) {
         var date = new Date(data.gatherings[i].detectionTime);
-        switch (date.getDay()) {
-          case 0: 
-            counter[0]++
-            mediaFlow[0]+=data.gatherings[i].flow
-            break;
-          case 1:
-            counter[1]++
-            mediaFlow[1]+=data.gatherings[i].flow
-            break;
-          case 2:
-            counter[2]++
-            mediaFlow[2]+=data.gatherings[i].flow
-            break;
-          case 3:
-            counter[3]++
-            mediaFlow[3]+=data.gatherings[i].flow
-            break;
-          case 4:
-            counter[4]++
-            mediaFlow[4]+=data.gatherings[i].flow
-            break;
-          case 5:
-            counter[5]++
-            mediaFlow[5]+=data.gatherings[i].flow
-            break;
-          case 6:
-            counter[6]++
-            mediaFlow[6]+=data.gatherings[i].flow
-            break
-        }
+        counter[date.getDay()]++;
+        mediaFlow[date.getDay()]+=data.gatherings[i].flow
       } 
       for(var i=0; i<7; i++) {
         mediaFlow[i]=mediaFlow[i]/counter[i];
@@ -94,13 +67,13 @@ export default {
       }
       return mediaFlow;
     },
-    createContent(flow_attuale) {
+    createContent(i) {
       var media = this.daysFlow(this.infoContent[0]);
       var string =  '<h1>' + this.infoContent[0].name + '</h1>' +
         '<h2> Descrizione: </h2>' +
         '<span>' + this.infoContent[0].description + '</span>' + '</br>' + '</br>' +
         '<h2> Flusso attuale: </h2>' +
-        '<span>' + flow_attuale + '</span>' +
+        '<span>' + this.markers[i].flow + '</span>' +
         '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">'+
         '<table id="grafico" class="charts-css column show-heading show-labels show-primary-axis show-data-on-hover">' +
           '<caption> Media del flusso di persone </caption>' +

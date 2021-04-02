@@ -106,6 +106,7 @@ export default {
                 map: this.$mapObject,
                 //icon: icon
               })
+              this.markers[i].flow = punti_di_un_giorno[i].flow;
             }
         })
       }
