@@ -10,16 +10,20 @@
 export default {
   name: 'Grafico',
   props: {
-      markers: {type: Array, required: true}
+    markers: {type: Array, required: true},
+
+    /*ref alla struttura dati totale di App!*/
+    data_selezionata: "",
+    orario_selezionato: "",
+    data: { type: Object, required: true },
   },
   data() {
     return {
-        infoContent: [],
-        infoWindow: Object,
+      infoContent: [],
+      infoWindow: Object,
     }
   },
   mounted() {
-    this.fetchContent(231231323123123123123);
     this.$gmapApiPromiseLazy().then(() => {
       this.infoWindow = new google.maps.InfoWindow({ content: "" });
       var f = () => {
@@ -29,9 +33,12 @@ export default {
         }
         for (let i = 0; i < this.markers.length; i++) {
           google.maps.event.addListener( this.markers[i], "click", () => {
-            console.log()
-            this.infoWindow.setContent(this.createContent(i));
             this.infoWindow.open(this.$mapObject, this.markers[i]);
+            this.infoWindow.setContent("");
+            this.fetchContent(this.data[this.data_selezionata][this.orario_selezionato][i].code)
+              .then( () => {
+                this.infoWindow.setContent(this.createContent(i));
+              });
           });
         }
       };
@@ -41,7 +48,7 @@ export default {
   methods: {
     async fetchContent(code) {
       const data = await (
-        await fetch("http://localhost:3000/points"/*code*/)
+        await fetch("http://localhost:5000/point/"+code)
           .catch( error => {
             //TODO: sistemare il caso in cui non ricevo dati!
             alert("errore nel fetch");
@@ -49,6 +56,7 @@ export default {
           })
       ).json();
       this.infoContent = data;
+      console.log(data)
     },
     daysFlow(data) {
       var mediaFlow = new Array(7).fill(0);
@@ -68,12 +76,12 @@ export default {
       return mediaFlow;
     },
     createContent(i) {
-      var media = this.daysFlow(this.infoContent[0]);
-      var string =  '<h1>' + this.infoContent[0].name + '</h1>' +
+      var media = this.daysFlow(this.infoContent);
+      var string =  '<h1>' + this.infoContent.name + '</h1>' +
         '<h2> Descrizione: </h2>' +
-        '<span>' + this.infoContent[0].description + '</span>' + '</br>' + '</br>' +
+        '<span>' + this.infoContent.description + '</span>' + '</br>' + '</br>' +
         '<h2> Flusso attuale: </h2>' +
-        '<span>' + this.markers[i].flow + '</span>' +
+        '<span>' + this.data[this.data_selezionata][this.orario_selezionato][i].flow + '</span>' +
         '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">'+
         '<table id="grafico" class="charts-css column show-heading show-labels show-primary-axis show-data-on-hover">' +
           '<caption> Media del flusso di persone </caption>' +

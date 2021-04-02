@@ -1,7 +1,12 @@
 <template>
   <div id="map" 
     ref="heatmap">
-    <Grafico ref="Grafico" :markers="markers" />
+    <Grafico ref="Grafico"
+      :markers="markers"
+      :data="data"
+      :data_selezionata="data_selezionata"
+      :orario_selezionato="orario_selezionato"
+    />
   </div>
 </template>
 
@@ -106,7 +111,6 @@ export default {
                 map: this.$mapObject,
                 //icon: icon
               })
-              this.markers[i].flow = punti_di_un_giorno[i].flow;
             }
         })
       }
