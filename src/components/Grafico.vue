@@ -79,6 +79,7 @@ export default {
       var media = this.daysFlow(this.infoContent);
       var string =  '<h1>' + this.infoContent.name + '</h1>' +
         '<h2> Descrizione: </h2>' +
+        +'<button onclick=changeGraphic()></button>'
         '<span>' + this.infoContent.description + '</span>' + '</br>' + '</br>' +
         '<h2> Flusso attuale: </h2>' +
         '<span>' + this.data[this.data_selezionata][this.orario_selezionato][i].flow + '</span>' +

@@ -52,7 +52,7 @@ export default {
     async fetchData() {
       //ricevo i dati della data selezionata
       const dati_ricevuti_grezzi = await (
-        await fetch("http://localhost:5000/points/time/" + this.data_selezionata)
+        await fetch("http://localhost:3000/points/")
           .catch( error => {
             //TODO: sistemare il caso in cui non ricevo dati!
             alert("errore nel fetch");
