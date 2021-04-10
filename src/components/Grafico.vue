@@ -1,5 +1,5 @@
-<template>
-    <div></div>
+<template id='2'>
+    <div><p>ciao</p></div>
 </template>
 
 <script async
@@ -37,7 +37,7 @@ export default {
             this.infoWindow.setContent("");
             this.fetchContent(this.data[this.data_selezionata][this.orario_selezionato][i].code)
               .then( () => {
-                this.infoWindow.setContent(this.createContent(i));
+                this.infoWindow.setContent(this.template);
               });
           });
         }
@@ -48,7 +48,7 @@ export default {
   methods: {
     async fetchContent(code) {
       const data = await (
-        await fetch("http://localhost:5000/point/"+code)
+        await fetch("http://localhost:3000/points/"/*+code+"/avg"*/)
           .catch( error => {
             //TODO: sistemare il caso in cui non ricevo dati!
             alert("errore nel fetch");
@@ -57,45 +57,45 @@ export default {
       ).json();
       this.infoContent = data;
     },
-    daysFlow(data) {
-      var mediaFlow = new Array(7).fill(0);
-      var counter = new Array(7).fill(0);
-      for(let i=0; i<data.gatherings.length; i++) {
-        var date = new Date(data.gatherings[i].detectionTime);
-        counter[date.getDay()]++;
-        mediaFlow[date.getDay()]+=data.gatherings[i].flow
-      } 
-      for(var i=0; i<7; i++) {
-        mediaFlow[i]=mediaFlow[i]/counter[i];
-        mediaFlow[i]=Math.round(mediaFlow[i]);
-        if(isNaN(mediaFlow[i])) {
-          mediaFlow[i]="";
-        }
-      }
-      return mediaFlow;
-    },
-    fuck() {
-        //this.createContent()
-    },
     createContent(i) {
-      var media = this.daysFlow(this.infoContent);
-      var string = '<h1>' + this.infoContent.name + '</h1>' +
+      var dateSelected=new Date(this.data_selezionata)
+
+      selectElement('selezione', dateSelected.getDay())
+      function selectElement(selezione, valueToSelect) {    
+          let element = document.getElementById(selezione);
+          element.value = valueToSelect;
+      }
+
+      var string1 = '<h1>' + this.infoContent[0].name + '</h1>' +
         '<h2> Descrizione: </h2>' +
-        '<span>' + this.infoContent.description + '</span>' + '</br>' + '</br>' +
-        '<button onclick="'+this.fuck()+'">Change</button>'+ 
+        '<span>' + this.infoContent[0].description + '</span>' + '</br>' + '</br>' +
         '<h2> Flusso attuale: </h2>' +
         '<span>' + this.data[this.data_selezionata][this.orario_selezionato][i].flow + '</span>' +
-        '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">'+
+          '<select id="selezione">'+
+            '<option value="1">Lunedì</option>'+
+            '<option value="2">Martedì</option>'+
+            '<option value="3">Mercoledì</option>'+
+            '<option value="4">Giovedì</option>'+
+            '<option value="5">Venerdì</option>' +
+            '<option value="6">Sabato</option>' +
+            '<option value="0">Domenica</option>' +
+          '</select>' +
+        '</div>' +
+        '<script>' +
+          'var sel = document.forms.MyForm.selezione.value;' +  
+        '</script>'
+
+      var string2 = '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">'+
         '<table id="grafico" class="charts-css column show-heading show-labels show-primary-axis show-data-on-hover">' +
           '<caption> Media del flusso di persone </caption>' +
           '<tbody>' +
             '<tr>' +
               '<th scope="row"> LUN </th>' +
-              '<td style="--size: calc(' + media[1] + '/ 100 )">' + media[1] + '</td>' +
+              '<td style="--size: calc(' + this.infoContent[0].flowaverage.monday[0] + '/ 100 )">' + media[1] + '</td>' +
             '</tr>'+
             '<tr>'+
               '<th scope="row"> MAR </th>'+
-              '<td style="--size: calc(' + media[2] + '/ 100 )">' + media[2] + '</td>'+
+              '<td style="--size: calc(' + media[2] + '/ 100 )">' + media[1] + '</td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> MER </th>'+
@@ -119,6 +119,8 @@ export default {
             '</tr>'+
           '</tbody>'+
         '</table>' 
+
+      var string = string1 
       return string
     },
     
