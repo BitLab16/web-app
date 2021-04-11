@@ -7,10 +7,18 @@
     background: white;
 }
 
-#grafico.column {
+#grafico1 {
     height: 200px;
     width: 400px;
     margin: 0 auto;
+    background-color: #f6f6f6;
+}
+
+#grafico2 {
+    height: 200px;
+    width: 400px;
+    margin: 0 auto;
+    background-color: #f6f6f6;
 }
 
 h1 {
