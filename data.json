@@ -12,7 +12,7 @@
                 ]
             },
             "flowaverage":{
-                "monday":{
+                "MONDAY":{
                    "0":13,
                    "1":12,
                    "2":8,

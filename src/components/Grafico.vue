@@ -7,6 +7,8 @@
 </script>
 
 <script>
+import '../assets/sytle/components/Grafico.css';
+
 export default {
   name: 'Grafico',
   props: {
@@ -33,18 +35,20 @@ export default {
           return;
         }
         for (let i = 0; i < this.markers.length; i++) {
-          google.maps.event.addListener( this.markers[i], "click", () => {
+          google.maps.event.addListener( this.markers[i], "mouseover", () => {
             this.infoWindow.open(this.$mapObject, this.markers[i]);
             this.infoWindow.setContent("");
             this.fetchContent1(this.data[this.data_selezionata][this.orario_selezionato][i].code)
-              .then( () => {
-                this.fetchContent2(this.data[this.data_selezionata][this.orario_selezionato][i].code, this.data_selezionata)
+            .then( () => {
+              this.fetchContent2(this.data[this.data_selezionata][this.orario_selezionato][i].code, this.data_selezionata)
               .then( () => {
                 this.infoWindow.setContent(this.createContent(i));
+              });
             });
-            });
-            
           });
+          /*google.maps.event.addListener( this.markers[i], "mouseout", () => {
+            this.infoWindow.close(this.$mapObject, this.markers[i]);
+          })*/
         }
       };
       f();
@@ -73,36 +77,40 @@ export default {
       ).json();
       this.infoContent2 = data;
     },
+    cambioGrafico() {
+      console.log("ciao")
+    },
     createContent(i) {
       var dateSelected=new Date(this.data_selezionata)
       var giornoSettimana=dateSelected.getDay()
-      if(giornoSettimana==0) giornoSettimana = "SUNDAY"  
-      /*selectElement('selezione', dateSelected.getDay())
-      function selectElement(selezione, valueToSelect) {    
-          let element = document.getElementById(selezione);
-          element.value = valueToSelect;
-      }*/
-     
+      switch(giornoSettimana) {
+        case 0: giornoSettimana = "SUNDAY";
+        break;
+        case 1: giornoSettimana = "MONDAY";
+        break;
+        case 2: giornoSettimana = "TUESDAY";
+        break;
+        case 3: giornoSettimana = "WEDNESDAY";
+        break;
+        case 4: giornoSettimana = "THURSDAY";
+        break;
+        case 5: giornoSettimana = "FRIDAY";
+        break;
+        case 6: giornoSettimana = "SATURDAY";
+        break;
+      } 
+      
       var string1 = '<h1>' + this.infoContent1[0].name + '</h1>' +
         '<h2> Descrizione: </h2>' +
         '<span>' + this.infoContent1[0].description + '</span>' + '</br>' + '</br>' +
         '<h2> Flusso attuale: </h2>' +
-        '<span>' + this.data[this.data_selezionata][this.orario_selezionato][i].flow + '</span>'
-        //'<button onclick="cambioGrafico()">Cambia</button>'
-        /*  '<select id="selezione">'+
-            '<option value="1">Lunedì</option>'+
-            '<option value="2">Martedì</option>'+
-            '<option value="3">Mercoledì</option>'+
-            '<option value="4">Giovedì</option>'+
-            '<option value="5">Venerdì</option>' +
-            '<option value="6">Sabato</option>' +
-            '<option value="0">Domenica</option>' +
-          '</select>' +
-        '</div>' + */
+        '<span>' + this.data[this.data_selezionata][this.orario_selezionato][i].flow + '</span>' +
+        '</br>' + '</br>'
 
-      var grafico1 = '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">'+
-        '<table id="grafico1" class="charts-css column show-heading show-labels show-primary-axis show-data-on-hover">' +
-          '<caption> Media del flusso di persone </caption>' +
+      var grafico1 = '<div>' +
+        '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">'+
+        '<table id="grafico1" class="charts-css column show-heading show-labels show-primary-axis ">' +
+          '<caption> MEDIA FLUSSO MENSILE DI PERSONE GIORNO DELLA SETTIMANA </caption>' +
           '<tbody>' +
             '<tr>' +
               '<th scope="row"> 0 </th>' +
@@ -201,114 +209,118 @@ export default {
               '<td style="--size: calc(' + this.infoContent1[0].flowaverage[giornoSettimana][23] + '/ 60 )"> ' + this.infoContent1[0].flowaverage[giornoSettimana][23] + ' </td>'+
             '</tr>'+
           '</tbody>'+
-        '</table>'
+        '</table>' +
+        '</br>'
 
-      var grafico2 = '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">'+
-        '<table id="grafico2" class="charts-css area show-heading show-labels show-primary-axis show-data-on-hover">' +
-          '<caption> Media del flusso di persone </caption>' +
+      var grafico2 = 
+        '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">'+
+        '<table id="grafico2" class="charts-css area show-heading show-labels show-primary-axis">' +
+          '<caption> FLUSSO DI PERSONE GIORNO CORRENTE </caption>' +
           '<tbody>' +
             '<tr>' +
               '<th scope="row"> 0 </th>' +
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[0].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[1].flow + '/60);">' + this.infoContent2[0].gatherings[0].flow + '</td>' +
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[0].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[1].flow + '/60);"></td>' +
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 1 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[1].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[2].flow + '/60);">' + this.infoContent2[0].gatherings[1].flow + '</td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[1].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[2].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 2 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[2].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[3].flow + '/60);">' + this.infoContent2[0].gatherings[2].flow + '</td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[2].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[3].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 3 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[3].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[4].flow + '/60);">' + this.infoContent2[0].gatherings[3].flow + '</td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[3].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[4].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 4 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[4].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[5].flow + '/60);">' + this.infoContent2[0].gatherings[4].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[4].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[5].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 5 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[5].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[6].flow + '/60);">' + this.infoContent2[0].gatherings[5].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[5].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[6].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 6 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[6].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[7].flow + '/60);">' + this.infoContent2[0].gatherings[6].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[6].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[7].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 7 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[7].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[8].flow + '/60);">' + this.infoContent2[0].gatherings[7].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[7].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[8].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 8 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[8].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[9].flow + '/60);">' + this.infoContent2[0].gatherings[8].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[8].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[9].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 9 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[9].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[10].flow + '/60);">' + this.infoContent2[0].gatherings[9].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[9].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[10].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 10 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[10].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[11].flow + '/60);">' + this.infoContent2[0].gatherings[10].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[10].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[11].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 11 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[11].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[12].flow + '/60);">' + this.infoContent2[0].gatherings[11].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[11].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[12].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 12 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[12].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[13].flow + '/60);">' + this.infoContent2[0].gatherings[12].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[12].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[13].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 13 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[13].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[14].flow + '/60);">' + this.infoContent2[0].gatherings[13].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[13].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[14].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 14 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[14].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[15].flow + '/60);">' + this.infoContent2[0].gatherings[14].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[14].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[15].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 15 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[15].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[16].flow + '/60);">' + this.infoContent2[0].gatherings[15].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[15].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[16].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 16 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[16].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[17].flow + '/60);">' + this.infoContent2[0].gatherings[16].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[16].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[17].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 17 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[17].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[18].flow + '/60);">' + this.infoContent2[0].gatherings[17].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[17].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[18].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 18 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[18].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[19].flow + '/60);">' + this.infoContent2[0].gatherings[18].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[18].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[19].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 19 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[19].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[20].flow + '/60);">' + this.infoContent2[0].gatherings[19].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[19].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[20].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 20 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[20].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[21].flow + '/60);">' + this.infoContent2[0].gatherings[20].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[20].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[21].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 21 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[21].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[22].flow + '/60);">' + this.infoContent2[0].gatherings[21].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[21].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[22].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 22 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[22].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[23].flow + '/60);">' + this.infoContent2[0].gatherings[22].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[22].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[23].flow + '/60);"></td>'+
             '</tr>'+
             '<tr>'+
               '<th scope="row"> 23 </th>'+
-              '<td style="--start: calc(' + this.infoContent2[0].gatherings[23].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[23].flow + '/60);">' + this.infoContent2[0].gatherings[23].flow + ' </td>'+
+              '<td style="--start: calc(' + this.infoContent2[0].gatherings[23].flow + '/60); --size: calc(' + this.infoContent2[0].gatherings[23].flow + '/60);"></td>'+
             '</tr>'+
           '</tbody>'+
-        '</table>'
+        '</table>' +
+        '</div>'
       
       var string = string1 + grafico1 + grafico2;
       return string
     },
+    
   }
 }
 
