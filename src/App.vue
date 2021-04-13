@@ -25,7 +25,7 @@ export default {
     return {
       data_selezionata: "",
       orario_selezionato: "", 
-      data: {}
+      data: {},
     }
   },
   methods: {
@@ -36,8 +36,9 @@ export default {
     },
     updatedTimePicker(newTime) {
       this.orario_selezionato = newTime;
-      if (Object.keys(this.data).length !== 0)
+      if (Object.keys(this.data).length !== 0) {
         this.$refs.Map.update_map();
+      }
     },
     dataOggi() {
       var date = new Date();
@@ -53,16 +54,12 @@ export default {
     async fetchData() {
       //ricevo i dati della data selezionata
       const dati_ricevuti_grezzi = await (
-        await fetch("http://localhost:3000"/*"time/" + this.data_selezionata*/)
-        .then(function(response) {
-          if (!response.ok) {
-            throw Error("ERRORE!");
-          }
-          return response;
-        })
-        .catch(function(error) {
-          console.log(error);
-        })
+        await fetch("http://localhost:5000/points/time/" + this.data_selezionata)
+          .catch( error => {
+            //TODO: sistemare il caso in cui non ricevo dati!
+            alert("errore nel fetch");
+            console.error("Errore nel fetch " + error);
+          } )
       ).json();
       if ( ! this.received_data_is_valid(dati_ricevuti_grezzi) ) {
         //TODO: cosa faccio qui?
@@ -75,19 +72,22 @@ export default {
     parseDataAndUpdateMap(dati_ricevuti_grezzi) {
       var dati_data_selezionata = {};
       for(let i=0; i < dati_ricevuti_grezzi.length; i++) {
-        var nuovo_dato = {}
-        nuovo_dato.flow = 60;
-        nuovo_dato.lat = dati_ricevuti_grezzi[i].point.location.coordinates.lat;
-        nuovo_dato.lng = dati_ricevuti_grezzi[i].point.location.coordinates.lng;
-        var timestamp = new Date(dati_ricevuti_grezzi[i].detectionTime);
-        var hh = timestamp.getHours();
-        if (hh < 10) hh = '0'+hh;
-        var min = timestamp.getMinutes();
-        if (min < 10) min = '0'+min;
-        var time = hh+':'+min;
-        if (! dati_data_selezionata[time])
-          dati_data_selezionata[time] = [];
-        dati_data_selezionata[time].push(nuovo_dato);
+        for(let j=0; j< dati_ricevuti_grezzi[i].gatherings.length; j++) {
+          var nuovo_dato = {};
+          nuovo_dato.flow = dati_ricevuti_grezzi[i].gatherings[j].flow; 
+          var timestamp = new Date(dati_ricevuti_grezzi[i].gatherings[j].detectionTime);
+          var hh = timestamp.getHours();
+          if (hh < 10) hh = '0'+hh;
+          var min = timestamp.getMinutes();
+          if (min < 10) min = '0'+min;
+          var time = hh+':'+min;
+          if (! dati_data_selezionata[time])
+            dati_data_selezionata[time] = [];
+          dati_data_selezionata[time].push(nuovo_dato);
+          nuovo_dato.lat = dati_ricevuti_grezzi[i].location.coordinates[0];
+          nuovo_dato.lng = dati_ricevuti_grezzi[i].location.coordinates[1];
+          nuovo_dato.code = dati_ricevuti_grezzi[i].code;
+        }
       }
       this.data[this.data_selezionata] = dati_data_selezionata;
       this.$refs.Map.update_map();
@@ -95,56 +95,3 @@ export default {
   },
 }
 </script>
-
-
-<!--
-FORMAT THIS.DATA
-{
-  "2019-01-01": {
-      "18:00": [
-      {
-        "lat": 45.397959,
-        "lng": 11.87721,
-        "flow": 1
-      },
-      {
-          "lat": 45.397959,
-          "lng": 11.87721,
-          "flow": 1
-      },
-    ],
-    "18:30": [
-      {
-        "lat": 45.397959,
-        "lng": 11.87721,
-        "flow": 1
-      },
-      {
-          "lat": 45.397959,
-          "lng": 11.87721,
-          "flow": 1
-      }
-    ],
-  },
-
-  ------
-
-
-  "ID"(OPPURE LAT E LNG): [
-    {
-        "detectionTime": "2019-07-27T00:00:00.000+00:00",
-        "lat": 45.397959,
-        "lng": 11.87721,
-        "flow": 1
-        "dati vari....."
-    },
-    {
-        "detectionTime": "2019-07-27T00:00:00.000+00:00",
-        "lat": 45.397959,
-        "lng": 11.87721,
-        "flow": 1
-        "dati vari....."
-    }
-  ]
-}
--->

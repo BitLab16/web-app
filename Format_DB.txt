@@ -1,0 +1,81 @@
+FORMAT INFO
+{
+  "ID1": [
+    "name":"Piazza dei signori",
+    "description":"Una delle piazze più \nimportati di padova",
+    "lat": 45.397959,
+    "lng": 11.87721
+  ]
+  "ID2": [
+    "name":"Piazza dei signori",
+    "description":"Una delle piazze più \nimportati di padova",
+    "lat": 45.397959,
+    "lng": 11.87721
+  ]
+  "ID3": [
+    "name":"Piazza dei signori",
+    "description":"Una delle piazze più \nimportati di padova",
+    "lat": 45.397959,
+    "lng": 11.87721
+  ]
+}
+
+-------------------------
+
+FORMAT TIME
+{
+  "2019-01-01": {
+    "18:00": [
+      {
+        "id": 1,
+        "flow": 1
+      },
+      {
+        "id": 2,
+        "flow": 50
+      },
+    ],
+    "18:30": [
+      {
+        "id": 1,
+        "flow": 40
+      },
+      {
+        "id": 2,
+        "flow": 10
+      },
+    ],
+  },
+}
+
+-------------------------
+
+FORMAT GRAFICO
+{
+  "ID": {
+    "2021-03-23": {
+      "18:00": [
+        {
+          "flow": 1
+        },
+      ]
+      "18:30": [
+        {
+          "flow": 10
+        }
+      ]
+    }
+    "2021-02-22": {
+      "18:00": [
+        {
+          "flow": 20
+        },
+      ]
+      "18:30": [
+        {
+          "flow": 30
+        }
+      ]
+    }
+  }
+}  

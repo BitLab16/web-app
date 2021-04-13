@@ -6,18 +6,21 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
+    "test:e2e": "vue-cli-service test:e2e",
     "test:unit-coverage": "vue-cli-service test:unit --coverage",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "charts.css": "^0.9.0",
     "core-js": "^3.9.1",
     "vue": "^2.6.12",
     "vue-slide-bar": "^1.2.0",
-    "vuejs-datetimepicker": "^1.1.13",
-    "vue2-google-maps": "^0.10.7"
+    "vue2-google-maps": "^0.10.7",
+    "vuejs-datetimepicker": "^1.1.13"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.11",
+    "@vue/cli-plugin-e2e-cypress": "^4.5.11",
     "@vue/cli-plugin-eslint": "^4.5.11",
     "@vue/cli-plugin-unit-jest": "^4.5.11",
     "@vue/cli-service": "^4.5.11",
