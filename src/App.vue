@@ -47,7 +47,9 @@ export default {
     received_data_is_valid(received_data) {
       //TODO: testare se i dati sono validi!
       // per il momento return true
-      return Object.keys(received_data).length !== 0;
+      var format_orario = /(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?/;
+      if(received_data[0]==format_orario) return true;
+      //return Object.keys(received_data).length !== 0;
     },
     async fetchData() {
       //ricevo i dati della data selezionata
@@ -61,6 +63,7 @@ export default {
       ).json();
       if ( ! this.received_data_is_valid(dati_ricevuti_grezzi) ) {
         //TODO: cosa faccio qui?
+        alert("Errore dati ricevuti non validi!");
         console.error ("Errore dati ricevuti non validi!");
         return;
       }
