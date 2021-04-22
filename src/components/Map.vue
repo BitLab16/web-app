@@ -1,7 +1,7 @@
 <template>
   <div id="map" 
     ref="heatmap">
-    <Grafico ref="Grafico"
+    <Infowindow ref="Infowindow"
       :markers="markers"
       :data="data"
       :data_selezionata="data_selezionata"
@@ -17,11 +17,11 @@
 <script>
 
 import '../assets/sytle/components/Map.css';
-import Grafico from './Grafico';
+import Infowindow from './Infowindow';
 
 export default {
   name: 'Map',
-  components: {Grafico},
+  components: {Infowindow},
   data() {
     return {
       infoContent: [],

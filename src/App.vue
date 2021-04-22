@@ -47,8 +47,6 @@ export default {
     received_data_is_valid(received_data) {
       //TODO: testare se i dati sono validi!
       // per il momento return true
-      
-      
       return Object.keys(received_data).length !== 0;
     },
     async fetchData() {

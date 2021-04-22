@@ -7,10 +7,10 @@
 </script>
 
 <script>
-import '../assets/sytle/components/Grafico.css';
+import '../assets/sytle/components/Infowindow.css';
 
 export default {
-  name: 'Grafico',
+  name: 'Infowindow',
   props: {
     markers: {type: Array, required: true},
 
