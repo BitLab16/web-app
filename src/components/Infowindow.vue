@@ -50,9 +50,9 @@ export default {
             });
           })
           });
-          google.maps.event.addListener( this.markers[i], "mouseout", () => {
+          /*google.maps.event.addListener( this.markers[i], "mouseout", () => {
             this.infoWindow.close(this.$mapObject, this.markers[i]);
-          })
+          })*/
         }
       };
       f();
