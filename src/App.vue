@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <Map :data="data" ref="Map"/>
+    <Map ref="Map"
+      :data="data"
+      :data_selezionata="data_selezionata"
+      :orario_selezionato="orario_selezionato"
+    />
     <DateTimePicker @pickedDate="updatedDatePicker" @pickedTime="updatedTimePicker"/>
   </div>
 </template>
@@ -21,72 +25,71 @@ export default {
     return {
       data_selezionata: "",
       orario_selezionato: "", 
-      data: {}
+      data: {},
     }
   },
-
   methods: {
     updatedDatePicker(newDate) {
-      // console.log("App::updatedDatePicker value received date: " + newDate);
       this.data_selezionata = newDate;
+      if(this.data[this.data_selezionata] && this.data_selezionata != this.dataOggi()) return;
       this.fetchData();
     },
     updatedTimePicker(newTime) {
-      // console.log("App::updatedTimePicker value received time: " + newTime);
       this.orario_selezionato = newTime;
-      this.$refs.Map.update_map();
+      if (Object.keys(this.data).length !== 0) {
+        this.$refs.Map.update_map();
+      }
+    },
+    dataOggi() {
+      var date = new Date();
+      return date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+    },
+    received_data_is_valid(received_data) {
+      //TODO: testare se i dati sono validi!
+      // per il momento return true
+      return Object.keys(received_data).length !== 0;
     },
     async fetchData() {
-      console.log("App::fetchData");
-      //TODO QUI:
-      // se la data è gia presente salta,
-      // ma se è oggi ricarica comunque così aggiorna
-      
       //ricevo i dati della data selezionata
-      const dati_ricevuti_grezzi = await (await fetch("http://localhost:5000/points"/*"time/" + this.data_selezionata*/)).json();
-      
-      // TODO:
-        // popolo dati_data_selezionata in funzione di dati_ricevuti_grezzi
-      var dati_data_selezionata = dati_ricevuti_grezzi; // !!! ERRORE! da togliere questa riga
-
+      const dati_ricevuti_grezzi = await (
+        await fetch("http://localhost:5000/points/time/" + this.data_selezionata)
+          .catch( error => {
+            //TODO: sistemare il caso in cui non ricevo dati!
+            alert("errore nel fetch");
+            console.error("Errore nel fetch " + error);
+          } )
+      ).json();
+      if ( ! this.received_data_is_valid(dati_ricevuti_grezzi) ) {
+        //TODO: cosa faccio qui?
+        alert("Errore dati ricevuti non validi!");
+        console.error ("Errore dati ricevuti non validi!");
+        return;
+      }
+      this.parseDataAndUpdateMap(dati_ricevuti_grezzi);
+    },
+    parseDataAndUpdateMap(dati_ricevuti_grezzi) {
+      var dati_data_selezionata = {};
+      for(let i=0; i < dati_ricevuti_grezzi.length; i++) {
+        for(let j=0; j< dati_ricevuti_grezzi[i].gatherings.length; j++) {
+          var nuovo_dato = {};
+          nuovo_dato.flow = dati_ricevuti_grezzi[i].gatherings[j].flow; 
+          var timestamp = new Date(dati_ricevuti_grezzi[i].gatherings[j].detectionTime);
+          var hh = timestamp.getHours();
+          if (hh < 10) hh = '0'+hh;
+          var min = timestamp.getMinutes();
+          if (min < 10) min = '0'+min;
+          var time = hh+':'+min;
+          if (! dati_data_selezionata[time])
+            dati_data_selezionata[time] = [];
+          dati_data_selezionata[time].push(nuovo_dato);
+          nuovo_dato.lat = dati_ricevuti_grezzi[i].location.coordinates[0];
+          nuovo_dato.lng = dati_ricevuti_grezzi[i].location.coordinates[1];
+          nuovo_dato.code = dati_ricevuti_grezzi[i].code;
+        }
+      }
       this.data[this.data_selezionata] = dati_data_selezionata;
       this.$refs.Map.update_map();
     }
   },
 }
 </script>
-
-
-<!--
-FORMAT THIS.DATA
-{
-  "2019-01-01": [
-    {
-        "time": "18:00",
-        "lat": 45.397959,
-        "lng": 11.87721,
-        "flow": 1
-    },
-    {
-        "time": "18:00",
-        "lat": 45.397959,
-        "lng": 11.87721,
-        "flow": 1
-    }
-    ],
-  "2019-01-02": [
-    {
-        "time": "18:00",
-        "lat": 45.397959,
-        "lng": 11.87721,
-        "flow": 1
-    },
-    {
-        "time": "18:00",
-        "lat": 45.397959,
-        "lng": 11.87721,
-        "flow": 1
-    }
-  ]
-}
--->
