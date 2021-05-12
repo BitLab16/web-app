@@ -72,12 +72,22 @@ export default {
       try {
         points = this.data[this.data_selezionata][this.orario_selezionato];
       } catch (error) {
-          console.error("ERROR Map::pointsGenerator: dati mai creati in App::data");
+        console.error("ERROR Map::pointsGenerator: dati mai creati in App::data");
           return {}
+      }
+      for(let i = 0;i < points.length; i++) {
+        let max = 0;
+        Object.keys(this.data[this.data_selezionata]).forEach((orario) => {
+          if(this.data[this.data_selezionata][orario][i].flow > max) {
+            max = this.data[this.data_selezionata][orario][i].flow;
+          }
+        });
+        let multiplier = 1; // TODO INSERIRE LA FUNZIONE (in funzione del massimo giornaliero e forse di qualcosaltro determinare il multt)
+        points.flow = points.flow * multiplier;
       }
       return points.map(points => ({
           location: new google.maps.LatLng(points.lat, points.lng),
-          weight: points.flow}))    
+          weight: points.flow}))
     },
     update_map() {
       this.$gmapApiPromiseLazy().then(() => {

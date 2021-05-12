@@ -27,7 +27,7 @@
             </div>
           </div>
         </div>
-        <button type='button' v-on:click='clearDate' class='okButton'>Clear</button>
+        <button type='button' v-on:click='clearDate' hidden="true" class='okButton'>Clear</button>
         <button type='button' v-on:click='setDate' class='okButton ok'>OK</button>
       </div>
     </div>
