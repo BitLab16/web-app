@@ -33,12 +33,16 @@ export default {
       this.data_selezionata = newDate;
       if(this.data[this.data_selezionata] && this.data_selezionata != this.dataOggi()) return;
       this.fetchData();
+      if(window.infoWindow)
+        window.infoWindow.infoWindow.close();
     },
     updatedTimePicker(newTime) {
       this.orario_selezionato = newTime;
       if (Object.keys(this.data).length !== 0) {
         this.$refs.Map.update_map();
       }
+      if(window.infoWindow)
+        window.infoWindow.infoWindow.close();
     },
     dataOggi() {
       var date = new Date();

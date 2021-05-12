@@ -6,6 +6,7 @@
       :data="data"
       :data_selezionata="data_selezionata"
       :orario_selezionato="orario_selezionato"
+      :mapObject="mapObject"
     />
   </div>
 </template>
@@ -25,7 +26,8 @@ export default {
   data() {
     return {
       infoContent: [],
-      markers: []
+      markers: [],
+      mapObject : undefined
     }
   },
   props: {
@@ -50,13 +52,13 @@ export default {
 
     /*del punto*/
     opacity: { type: Number, default: 1 },
-    radius: { type: Number, default:  15 },
+    radius: { type: Number, default:  30 },
     maxIntensity: { type: Number, default: 60 },
   },
   mounted() {
     this.$gmapApiPromiseLazy().then(()=> {
       // LA MAPPA
-      this.$mapObject = new google.maps.Map(this.$refs.heatmap, {
+      this.mapObject = new google.maps.Map(this.$refs.heatmap, {
         zoom: this.initialZoom,
         center: { lat: this.lat, lng: this.lng },
         restriction: this.map_bounds,
@@ -88,7 +90,7 @@ export default {
           radius: this.radius,
           maxIntensity: this.maxIntensity,
         })
-        this.$heatmap.setMap(this.$mapObject);
+        this.$heatmap.setMap(this.mapObject);
       })
 
       // I MARKERS
@@ -108,7 +110,7 @@ export default {
             for(var i=0; i<punti_di_un_giorno.length; i++) {
               this.markers[i] = new google.maps.Marker({ 
                 position: new google.maps.LatLng(punti_di_un_giorno[i].lat/*-0.0015*/, punti_di_un_giorno[i].lng),
-                map: this.$mapObject,
+                map: this.mapObject,
                 //icon: icon
               })
             }
