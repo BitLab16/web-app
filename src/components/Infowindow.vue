@@ -65,6 +65,7 @@ export default {
                   this.fetchContent2(this.data[this.data_selezionata][this.orario_selezionato][i].code, this.data_selezionata)
                     .then( () => {
                       window.currentPointID = i;
+                      numeroGraficoCorrente = 1;
                       this.infoWindow.setContent(this.createContent(i));
                     });
                 });
@@ -174,6 +175,7 @@ export default {
             '<tr>' +
               '<th scope="row"><p class="descrizioneChart"> ' + i + ' </p></th>' +
               '<td style="--size: calc(' + (this.infoContent1['flow-average'][giornoSettimana][i] / max_flow1) + ' )">' +
+              '<p class="numerettoChart">' + this.infoContent1['flow-average'][giornoSettimana][i] + '</p>' +
               '</td>'
             '</tr>';
       grafico1 = grafico1 + '</tbody> </table><h3 class="infoWindowH3"> <i>media flusso mensile di persone per il giorno della settimana</i> </h3>';

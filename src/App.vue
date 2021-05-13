@@ -1,11 +1,13 @@
 <template>
   <div id="app">
+    
     <Map ref="Map"
       :data="data"
       :data_selezionata="data_selezionata"
       :orario_selezionato="orario_selezionato"
     />
     <DateTimePicker @pickedDate="updatedDatePicker" @pickedTime="updatedTimePicker"/>
+    <a href="https://github.com/BitLab16"><img src="@/assets/logo.png" class="logo" /></a>
   </div>
 </template>
 

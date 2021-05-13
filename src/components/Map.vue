@@ -20,6 +20,12 @@
 import '../assets/sytle/components/Map.css';
 import Infowindow from './Infowindow';
 
+const bounds= {
+  north: 45.444315,
+  south: 45.362051,
+  west: 11.825627,
+  east: 11.948540
+};
 export default {
   name: 'Map',
   components: {Infowindow},
@@ -35,25 +41,19 @@ export default {
     data_selezionata: "",
     orario_selezionato: "",
     data: { type: Object, required: true },
-
+    
     //points: {type: Object, default: this.data[this.data_selezionata][this.orario_selezionato]},
 
     /*della mappa*/
-    map_bounds: {
-      north: 45.444315,
-      south: 45.362051,
-      west: 11.825627,
-      east: 11.948540
-    },
     lat: { type: Number, default: 45.407588 },
     lng: { type: Number, default: 11.877029 },
     initialZoom: { type: Number, default: 14 },
     mapTypeId: { type: String, default: 'roadmap' },
 
     /*del punto*/
-    opacity: { type: Number, default: 1 },
-    radius: { type: Number, default:  30 },
-    maxIntensity: { type: Number, default: 60 },
+    opacity: { type: Number, default: 0 },
+    radius: { type: Number, default:  32 },
+    maxIntensity: { type: Number, default: 55 },
   },
   mounted() {
     this.$gmapApiPromiseLazy().then(()=> {
@@ -61,8 +61,10 @@ export default {
       this.mapObject = new google.maps.Map(this.$refs.heatmap, {
         zoom: this.initialZoom,
         center: { lat: this.lat, lng: this.lng },
-        restriction: this.map_bounds,
         dmapTypeId: this.mapTypeId,
+        restriction: {
+          latLngBounds: bounds,
+        },
       })
     });
   },
@@ -82,7 +84,15 @@ export default {
             max = this.data[this.data_selezionata][orario][i].flow;
           }
         });
-        let multiplier = 1; // TODO INSERIRE LA FUNZIONE (in funzione del massimo giornaliero e forse di qualcosaltro determinare il multt)
+        let multiplier; // TODO INSERIRE LA FUNZIONE (in funzione del massimo giornaliero e forse di qualcosaltro determinare il multt)
+        if (max < 20)
+          multiplier = 2.5;
+        else if (max < 40)
+          multiplier = 1.5;
+        else if (max < 60)
+          multiplier = 1.2;
+        else
+          multiplier = 1;
         points.flow = points.flow * multiplier;
       }
       return points.map(points => ({

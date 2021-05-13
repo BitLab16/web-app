@@ -14,8 +14,6 @@ div.gm-style-iw {
     overflow:hidden!important;
 }
 #infoWindowDiv {
-    /*height: 500px;
-    width: 500px;*/
 }
 .infoWindowH1 {
     font-size: 15px;
@@ -42,6 +40,7 @@ div.gm-style-iw {
 
 .numerettoChart {
     font-size: 8px;
+    display: none;
 }
 .descrizioneChart {
     font-size: 8px;
