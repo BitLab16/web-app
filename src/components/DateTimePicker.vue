@@ -8,8 +8,8 @@
                 v-model="slider.value"
                 :data="slider.data"
                 :range="slider.range"
-                :labelStyles="{ color: 'var(--main-color-5)', backgroundColor: 'var(--main-color-5)' }"
-                :processStyle="{ backgroundColor: 'var(--main-color-5)' }"
+                :labelStyles="{ color: 'var(--main-color-2)', backgroundColor: 'var(--main-color-2)' }"
+                :processStyle="{ backgroundColor: 'var(--main-color-3)' }"
                 @callbackRange="updatedSlider"
             />
         </div>
