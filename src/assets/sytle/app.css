@@ -1,6 +1,9 @@
 :root {
-    --border-color-1: #d694f5;
-    --border-size-1: 5px
+    --main-color: #e0fbfc;
+    --main-color-2: #293241;
+    --main-color-3: #ee6c4d;
+    --main-color-4: #98c1d9;
+    --main-color-5:#3d5a80;
 }
 
 html, body {

@@ -1,15 +1,15 @@
 <template>
     <div>
         <div id="calendar">
-            <datetime format="YYYY-MM-DD" width="300px" @input="updatedCalendar" firstDayOfWeek="1" />
+            <datetime format="YYYY-MM-DD" @input="updatedCalendar" firstDayOfWeek="1" />
         </div>
         <div id="slidebar">
             <VueSlideBar
                 v-model="slider.value"
                 :data="slider.data"
                 :range="slider.range"
-                :labelStyles="{ color: 'var(--border-color-1)', backgroundColor: 'var(--border-color-1)' }"
-                :processStyle="{ backgroundColor: 'var(--border-color-1)' }"
+                :labelStyles="{ color: 'var(--main-color-5)', backgroundColor: 'var(--main-color-5)' }"
+                :processStyle="{ backgroundColor: 'var(--main-color-5)' }"
                 @callbackRange="updatedSlider"
             />
         </div>

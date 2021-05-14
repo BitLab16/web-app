@@ -1,100 +1,105 @@
 #slidebar {
     position: fixed;
     float: left;
-    background-color: white;
+    background-color: var(--main-color);
     opacity: 0.8;
     margin: collapse;
-    margin-left: min(350px);
+    margin-left: min(340px);
     width: 50vw;
     height: 10vh;
     top: 10px;
     padding-left: 20px;  
     padding-right: 20px;   
-    border-radius: 15px;
-    border: var(--border-size-1) solid var(--border-color-1);
+    border: 3px solid var(--main-color-2);
 }
 #wrap {
   min-height: 0px!important;
 }
 
 .year-month-wrapper{
-    background-color: var(--border-color-1);
-    border-radius: 5px;
+    background-color: var(--main-color-3);
 }
 
   input{
     margin-left: 10px;
     text-align: center;
-    font-size: 20px;
-    min-width: 226px;
-    width:100%;
+    font-size: 21px;
+    color: var(--main-color);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 550;
+    width: 300px;
     height: 30px;
-    padding: 3px;
-    border-radius: 15px;
-    border: var(--border-size-1) solid var(--border-color-1);
+    background-color: var(--main-color-5);
+    border: 3px solid var(--main-color-2);
+    outline: none;
+    cursor: pointer;
   }
   .datetime-picker{
     position: fixed;
-    top: 35px;
+    top: 10px;
   }
   .calender-div{
-    min-width: 270px;
-    box-shadow: 1px 2px 5px #ccc;
-    background: #FFF;
+    background: var(--main-color);
     position: absolute;
-    display: inline-block;
-    left: 16px;
-    top: 35px;
-    color: #444;
-    font-size: 14px;
+    font-size: 15px;
     padding-bottom: 10px;
-    z-index: 100;
-    border-radius: 15px;
+    font-family: 'Courier New', Courier, monospace;
+    width: 309px;
+    margin-left: 10px;
   }
-  .port, .days{
+  .port {
+    display: inline-block;
+    width: 44px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--main-color-2);
+    padding-top: 12px;
+  }
+  .days{
+    display: inline-block;
+    width: 44px;
+    
+    text-align: center;
+    cursor: pointer;
+    color: var(--main-color-2);
+    font-weight: bold;
+    text-align: center;
+    padding-top: 4px;
+  }
+  .port:hover{
+    color: var(--main-color-2);
+    font-weight: 900;
+    
+  }
+  .activePort, .activePort:hover {
+    background-color: var(--main-color-3);
+    color: var(--main-color);
+    border-radius: 50%;
+  }
+  .month-setter, .year-setter{
+    width: 49.8%;
+    font-weight: 900;
+    display: inline-block;
+    text-align: center;
+    height: 36px;
+  }
+  
+  .nav-l, .nav-r {
     display: inline-block;
     width: 30px;
     height: 30px;
-    padding: 5px 3px;
-    margin: 2px;
-    border-radius: 2px;
-    text-align: center;
-    vertical-align: top;
-    cursor: pointer;
-  }
-  .days{
-    color: var(--border-color-1);
-    font-weight: bold;
-  }
-  .port:hover{
-    color: var(--border-color-1);
-    font-weight: bold;
-  }
-  .activePort, .activePort:hover {
-    background-color: var(--border-color-1);
-    color: white;
-  }
-  .month-setter, .year-setter{
-    margin: 0 1px;
-    width: 48.2%;
-    color: white;
-    font-weight: 900;
-    display: inline-block;
-    border-radius: 5px;
-  }
-  .nav-l:hover, .nav-r:hover {
-    background-color: #dc3c00;
-  }
-  .nav-l, .nav-r {
-    display: inline-block;
-    width: 25px;
-    background-color: var(--border-color-1);
-    color: white;
+    color: var(--main-color-5);
     font-size: 16px;
     cursor: pointer;
     border: 0;
-    padding: 7px;
-    margin:0;
+    margin: 3px;
+    background-color: var(--main-color-3)
+  }
+  .nav-l:hover, .nav-r:hover {
+    background-color: var(--main-color-2);
+    border-radius: 50%;
+    color: var(--main-color-4)
   }
   .nav-l:focus, .nav-r:focus{
     outline: none;
@@ -105,25 +110,32 @@
   .nav-r{
     float: right;
   }
-  .month, .year{
-    width: 40px;
-    text-align: right;
+  .month, .year {
+    height: 100%;
     display: inline-block;
-    color: white;
-    padding: 7px 0;
+    color: var(--main-color);
+    text-align: center;
+    padding-top: 10px;
   }
+
   .noDisplay{
     display: none;
   }
   .okButton{
-    color: var(--border-color-1);
-    font-size: 15px;
-    font-weight: bold;
-    padding: 0;
+    color: var(--main-color-5);
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 800;
+    padding: 10px;
     float: right;
     border: 0;
     margin-right: 10px;
     margin-top: 10px;
     cursor: pointer;
     background: transparent;
+  }
+
+  .okButton:hover {
+    background: var(--main-color-3);
+    border-radius: 50%;
   }
