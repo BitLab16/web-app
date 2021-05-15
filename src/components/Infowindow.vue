@@ -146,7 +146,7 @@ export default {
         case 2:
           grafico = this.getGrafico2();
       }
-      var bottoncino = '<button id="bottoncinoCambiaGrafico" onclick="window.cambiaGraficoInfoWindow()" > ...altro... </button>';
+      var bottoncino = '<button id="bottoncinoCambiaGrafico" onclick="window.cambiaGraficoInfoWindow()" > Cambia grafico </button>';
 
       return import_link + '<div id="infoWindowDiv"> ' + header + "" + grafico + ' </div>' + bottoncino;
     },
@@ -178,11 +178,19 @@ export default {
               '<p class="numerettoChart">' + this.infoContent1['flow-average'][giornoSettimana][i] + '</p>' +
               '</td>'
             '</tr>';
-      grafico1 = grafico1 + '</tbody> </table><h3 class="infoWindowH3"> <i>media flusso mensile di persone per il giorno della settimana</i> </h3>';
+      var giorno;
+      switch(dateSelected.getDay()) {
+        case 0: giorno = "la domenica"; break;
+        case 1: giorno = "il lunedì"; break;
+        case 2: giorno = "il martedì"; break;
+        case 3: giorno = "il mercoledì"; break;
+        case 4: giorno = "il giovedì"; break;
+        case 5: giorno = "il venerdì"; break;
+        case 6: giorno = "il sabato"; break;
+      }
+      grafico1 = grafico1 + '</tbody> </table><h3 class="infoWindowH3"> <i>Media flusso di persone ' + giorno + '</i> </h3>';
       return grafico1;
     },
-
-
 
     getGrafico2() {
       var grafico2 = 
@@ -198,7 +206,7 @@ export default {
               '<th scope="row"> <p class="descrizioneChart">' + i + ' </p></th>' +
               '<td style="--start: calc(' + (this.infoContent2[i]/max_flow2) + '); --size: calc(' + (this.infoContent2[Math.min(i+1, 23)]/max_flow2) + ');"></td>' +
             '</tr>';
-      grafico2 = grafico2 + '</tbody> </table><h3 class="infoWindowH3"> <i>flusso di persone del giorno corrente</i> </h3>';
+      grafico2 = grafico2 + '</tbody> </table><h3 class="infoWindowH3"> <i>Flusso di persone di oggi</i> </h3>';
       return grafico2;
     }
     

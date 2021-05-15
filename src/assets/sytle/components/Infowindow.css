@@ -1,36 +1,86 @@
 
 #grafico1 {
-    width: 400px;
+    
+    width: 300px;
     margin: 0 auto;
+    margin-right: 12px;
+    border-collapse: collapse;
 }
 
 #grafico2 {
     /*height: 200px;*/
     width: 400px;
     margin: 0 auto;
+    margin-right: 12px;
 }
 
-div.gm-style-iw {
+
+
+#bottoncinoCambiaGrafico {
+    border: 2px solid;
+    border-color: var(--main-color-2);
+    background-color: var(--main-color-5);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 800;
+    color: var(--main-color);
+    cursor: pointer;
+    width: 45%;
+    margin-left: 26%;
+    margin-bottom: 10px;
+}
+
+.gm-style-iw {
+    background-color: var(--main-color)!important;
     overflow:hidden!important;
+    border-radius: 0!important;
+    border: 3px solid;
+    border-color: var(--main-color-2);
+}
+
+.gm-style-iw div {
+    overflow:hidden!important;
+    background-color: var(--main-color)!important;
+}
+
+.gm-style-iw-t::after {
+    background:none!important;
+    box-shadow:none!important;
+}
+
+.storemapper-iw {
+    background-color: var(--main-color)!important;
 }
 
 .infoWindowH1 {
     font-size: 15px;
     text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    margin-right: 12px;
+    color: var(--main-color-2)
 }
 .infoWindowH2 {
-    font-size: 10px;
+    font-size: 13px;
     font-weight: unset;
     text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    margin-right: 12px;
+    color: var(--main-color-2)
 }
 .infoWindowH3 {
-    font-size: 10px;
+    font-size: 13px;
     text-align: center;
     font-weight: unset;
+    font-family: 'Courier New', Courier, monospace;
+    margin-right: 12px;
+    color: var(--main-color-2)
 }
 .infoWindowP {
-    font-size: 12px;
+    font-size: 13px;
+    width: 300px;
     text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    margin-right: 12px;
+    color: var(--main-color-2)
 }
 #grafico1,#grafico2 {
     width: 300px;
@@ -40,9 +90,11 @@ div.gm-style-iw {
 .numerettoChart {
     font-size: 8px;
     display: none;
+    font-family: 'Courier New', Courier, monospace;
 }
 .descrizioneChart {
     font-size: 8px;
+    font-family: 'Courier New', Courier, monospace; 
 }
 #contenutoGraficoInfoWindow {
     color: #f6f600;
