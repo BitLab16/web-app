@@ -24,3 +24,16 @@ html, body {
     background-color: transparent;
     padding: 5px;
 }
+
+.charts-css {
+    --color-1: #012a4a!important;
+    --color-2: #014f86!important;
+    --color-3: #2a6f97!important;
+    --color-4: #2c7da0!important;
+    --color-5: #468faf!important;
+    --color-6: #61a5c2!important;
+    --color-7: #2c7da0!important;
+    --color-8: #2a6f97!important;
+    --color-9: #014f86!important;
+    --color-10: #012a4a!important;
+}

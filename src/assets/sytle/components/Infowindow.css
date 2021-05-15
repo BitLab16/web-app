@@ -1,20 +1,24 @@
-
 #grafico1 {
-    
     width: 300px;
     margin: 0 auto;
-    margin-right: 12px;
-    border-collapse: collapse;
+    
+    height: 100px!important;
+}
+
+.charts-css.show-heading {
+    --heading-size: 0rem!important;
 }
 
 #grafico2 {
-    /*height: 200px;*/
     width: 400px;
     margin: 0 auto;
-    margin-right: 12px;
+    
+    height: 100px!important;
 }
 
-
+.charts-css.area tbody tr td:nth-of-type(10n+1)::before {
+    background: var(--main-color-3,var(--main-color-3))!important;
+}
 
 #bottoncinoCambiaGrafico {
     border: 2px solid;
@@ -26,7 +30,10 @@
     cursor: pointer;
     width: 45%;
     margin-left: 26%;
-    margin-bottom: 10px;
+}
+
+.gm-style .gm-style-iw-c {
+    padding:12px!important;
 }
 
 .gm-style-iw {
@@ -55,31 +62,33 @@
     font-size: 15px;
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
-    margin-right: 12px;
-    color: var(--main-color-2)
+    
+    color: var(--main-color-2);
 }
 .infoWindowH2 {
     font-size: 13px;
     font-weight: unset;
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
-    margin-right: 12px;
-    color: var(--main-color-2)
+    
+    color: var(--main-color-2);
 }
 .infoWindowH3 {
     font-size: 13px;
     text-align: center;
     font-weight: unset;
     font-family: 'Courier New', Courier, monospace;
-    margin-right: 12px;
-    color: var(--main-color-2)
+    
+    color: var(--main-color-2);
+    margin-top: 0!important;
+    margin-bottom: 20px!important;
 }
 .infoWindowP {
     font-size: 13px;
     width: 300px;
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
-    margin-right: 12px;
+    
     color: var(--main-color-2)
 }
 #grafico1,#grafico2 {
@@ -96,7 +105,5 @@
     font-size: 8px;
     font-family: 'Courier New', Courier, monospace; 
 }
-#contenutoGraficoInfoWindow {
-    color: #f6f600;
-}
+
   

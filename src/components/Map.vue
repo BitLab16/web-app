@@ -23,7 +23,7 @@ import Infowindow from './Infowindow';
 const bounds= {
   north: 45.444315,
   south: 45.362051,
-  west: 11.825627,
+  west: 11.807114,
   east: 11.948540
 };
 export default {
@@ -45,8 +45,8 @@ export default {
     //points: {type: Object, default: this.data[this.data_selezionata][this.orario_selezionato]},
 
     /*della mappa*/
-    lat: { type: Number, default: 45.407588 },
-    lng: { type: Number, default: 11.877029 },
+    lat: { type: Number, default: 45.405766 },
+    lng: { type: Number, default: 11.878096 },
     initialZoom: { type: Number, default: 14 },
     mapTypeId: { type: String, default: 'roadmap' },
 
