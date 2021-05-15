@@ -8,8 +8,8 @@
                 v-model="slider.value"
                 :data="slider.data"
                 :range="slider.range"
-                :labelStyles="{ color: 'var(--main-color-5)', backgroundColor: 'var(--main-color-5)' }"
-                :processStyle="{ backgroundColor: 'var(--main-color-5)' }"
+                :labelStyles="{ color: 'var(--main-color-2)', backgroundColor: 'var(--main-color-2)' }"
+                :processStyle="{ backgroundColor: 'var(--main-color-3)' }"
                 @callbackRange="updatedSlider"
             />
         </div>
@@ -40,30 +40,30 @@ export default {
           "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30",
         ],
         range: [
-          { label: '00:00', isHide: false }, { label: '00:30', isHide:true },
-          { label: '01:00', isHide: true }, { label: '01:30', isHide: true },
-          { label: '02:00', isHide: false }, { label: '02:30', isHide: true },
-          { label: '03:00', isHide: true }, { label: '03:30', isHide: true },
-          { label: '04:00', isHide: false }, { label: '04:30', isHide: true },
-          { label: '05:00', isHide: true }, { label: '05:30', isHide: true },
-          { label: '06:00', isHide: false }, { label: '06:30', isHide: true },
-          { label: '07:00', isHide: true }, { label: '07:30', isHide: true },
-          { label: '08:00', isHide: false }, { label: '08:30', isHide: true },
-          { label: '09:00', isHide: true }, { label: '09:30', isHide: true },
-          { label: '10:00', isHide: false }, { label: '10:30', isHide: true },
-          { label: '11:00', isHide: true }, { label: '11:30', isHide: true },
-          { label: '12:00', isHide: false }, { label: '12:30', isHide: true },
-          { label: '13:00', isHide: true }, { label: '13:30', isHide: true },
-          { label: '14:00', isHide: false }, { label: '14:30', isHide: true },
-          { label: '15:00', isHide: true }, { label: '15:30', isHide: true },
-          { label: '16:00', isHide: false }, { label: '16:30', isHide: true },
-          { label: '17:00', isHide: true }, { label: '17:30', isHide: true },
-          { label: '18:00', isHide: false }, { label: '18:30', isHide: true },
-          { label: '19:00', isHide: true }, { label: '19:30', isHide: true },
-          { label: '20:00', isHide: false }, { label: '20:30', isHide: true },
-          { label: '21:00', isHide: true }, { label: '21:30', isHide: true },
-          { label: '22:00', isHide: false }, { label: '22:30', isHide: true },
-          { label: '23:00', isHide: true }, { label: '23:30', isHide:true },
+          { label: '00:00', isHide: true }, { label: '00:30', isHide:true },
+          { label: '01:00', isHide: false }, { label: '01:30', isHide: true },
+          { label: '02:00', isHide: true }, { label: '02:30', isHide: true },
+          { label: '03:00', isHide: false }, { label: '03:30', isHide: true },
+          { label: '04:00', isHide: true }, { label: '04:30', isHide: true },
+          { label: '05:00', isHide: false }, { label: '05:30', isHide: true },
+          { label: '06:00', isHide: true }, { label: '06:30', isHide: true },
+          { label: '07:00', isHide: false }, { label: '07:30', isHide: true },
+          { label: '08:00', isHide: true }, { label: '08:30', isHide: true },
+          { label: '09:00', isHide: false }, { label: '09:30', isHide: true },
+          { label: '10:00', isHide: true }, { label: '10:30', isHide: true },
+          { label: '11:00', isHide: false }, { label: '11:30', isHide: true },
+          { label: '12:00', isHide: true }, { label: '12:30', isHide: true },
+          { label: '13:00', isHide: false }, { label: '13:30', isHide: true },
+          { label: '14:00', isHide: true }, { label: '14:30', isHide: true },
+          { label: '15:00', isHide: false }, { label: '15:30', isHide: true },
+          { label: '16:00', isHide: true }, { label: '16:30', isHide: true },
+          { label: '17:00', isHide: false }, { label: '17:30', isHide: true },
+          { label: '18:00', isHide: true }, { label: '18:30', isHide: true },
+          { label: '19:00', isHide: false }, { label: '19:30', isHide: true },
+          { label: '20:00', isHide: true }, { label: '20:30', isHide: true },
+          { label: '21:00', isHide: false }, { label: '21:30', isHide: true },
+          { label: '22:00', isHide: true }, { label: '22:30', isHide: true },
+          { label: '23:00', isHide: false }, { label: '23:30', isHide:true },
         ]
       }
     }

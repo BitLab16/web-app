@@ -1,9 +1,9 @@
 :root {
-    --main-color: #e0fbfc;
-    --main-color-2: #293241;
-    --main-color-3: #ee6c4d;
-    --main-color-4: #98c1d9;
-    --main-color-5:#3d5a80;
+    --main-color: #f1faee;
+    --main-color-2: #1d3557;
+    --main-color-3: #e63946;
+    --main-color-4: #a8dadc;
+    --main-color-5:#457b9d;
 }
 
 html, body {
@@ -12,15 +12,28 @@ html, body {
 }
 
 .logo {
-    width: 75px;
+    width: 115px;
     position: fixed;
     float: left;
     right: 70px;
-    bottom: 35px;
+    bottom: 40px;
     border-radius: 15px;
     opacity: 0.8;
     margin: collapse;
     border: var(--border-size-1) solid var(--border-color-1);
-    background-color: white;
+    background-color: transparent;
     padding: 5px;
+}
+
+.charts-css {
+    --color-1: #012a4a!important;
+    --color-2: #014f86!important;
+    --color-3: #2a6f97!important;
+    --color-4: #2c7da0!important;
+    --color-5: #468faf!important;
+    --color-6: #61a5c2!important;
+    --color-7: #2c7da0!important;
+    --color-8: #2a6f97!important;
+    --color-9: #014f86!important;
+    --color-10: #012a4a!important;
 }

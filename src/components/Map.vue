@@ -23,7 +23,7 @@ import Infowindow from './Infowindow';
 const bounds= {
   north: 45.444315,
   south: 45.362051,
-  west: 11.825627,
+  west: 11.807114,
   east: 11.948540
 };
 export default {
@@ -45,8 +45,8 @@ export default {
     //points: {type: Object, default: this.data[this.data_selezionata][this.orario_selezionato]},
 
     /*della mappa*/
-    lat: { type: Number, default: 45.407588 },
-    lng: { type: Number, default: 11.877029 },
+    lat: { type: Number, default: 45.405766 },
+    lng: { type: Number, default: 11.878096 },
     initialZoom: { type: Number, default: 14 },
     mapTypeId: { type: String, default: 'roadmap' },
 
@@ -117,11 +117,10 @@ export default {
       if (this.markers.length < 1) {
         this.$gmapApiPromiseLazy().then(()=> {
           var punti_di_un_giorno = this.data[this.data_selezionata][this.orario_selezionato];
-            /*const icon = {
-              url: "/src/assets/circle.png",
-              scaledSize: new google.maps.Size(50,50),
-              anchor: new google.maps.Point(0, 0)
-            };*/
+          var markerLogo = { 
+            url: 'https://i.postimg.cc/7bvZVmJ0/Microsoft-Teams-image.png',
+            scaledSize: new google.maps.Size(40, 40),
+          }
             if(this.markers) {
               for(var i=0; i<this.markers.length; i++) {
                 this.markers[i].setMap(null);
@@ -131,7 +130,7 @@ export default {
               this.markers[i] = new google.maps.Marker({ 
                 position: new google.maps.LatLng(punti_di_un_giorno[i].lat/*-0.0015*/, punti_di_un_giorno[i].lng),
                 map: this.mapObject,
-                //icon: icon
+                icon: markerLogo
               })
             }
         })
