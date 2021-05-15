@@ -3,7 +3,9 @@
     float: left;
     background-color: var(--main-color);
     opacity: 0.8;
-    left: 30vw;
+    left: 50%;
+    left: 50%;
+    margin-left: -263px;
     width: 480px;
     height: 80px;
     top: 10px;
@@ -54,7 +56,7 @@
     padding: 0;
   }
 
-  @media screen and (max-width: 1100px) {
+  @media screen and (max-width: 1190px) {
     .calendario {
       margin-top: 90px;
       position: fixed;
@@ -63,10 +65,7 @@
       
     }
 
-    #slidebar {
-      left: 50%;
-      margin-left: -263px;
-    }
+  
 
   }
 
