@@ -19,6 +19,10 @@ describe('App.vue', () => {
   beforeEach(()=>{
     wrapper = shallowMount(App, {propsData: {}});
   });
+
+  test("creazione App", () => {
+    expect(wrapper).not.toBe(undefined);
+  })
   
   test("riceve e salva la data nuova emessa da DateTimePicker", () => {
     wrapper.findComponent(DateTimePicker).vm.$emit("pickedDate", "2019-07-06");
@@ -39,32 +43,11 @@ describe('App.vue', () => {
     .toBeTruthy;
   });
   test("dati non ricevuti nel fetch", async (done) => {
-    wrapper.vm.received_data_is_valid = jest.fn().mockImplementation(
-      () => false
-    );
-    wrapper.vm.parseDataAndUpdateMap = jest.fn().mockImplementation(
-      () => {}
-    );
+    wrapper.vm.received_data_is_valid = jest.fn().mockImplementation( () => false );
+    wrapper.vm.parseDataAndUpdateMap = jest.fn().mockImplementation( () => {} );
+    wrapper.vm.$refs.Map.update_map = jest.fn().mockImplementation( ()=>{} );
     await wrapper.vm.fetchData();
-    await expect(wrapper.vm.fetch()).rejects.toThrow("ERRORE");
-    expect(wrapper.vm.received_data_is_valid).toBeFalsy();
     expect(wrapper.vm.parseDataAndUpdateMap).not.toHaveBeenCalled();
-
-   /* var data_clone;
-    wrapper.vm.parseDataAndUpdateMap = jest.fn().mockImplementation(
-      data => data_clone = data 
-    );
-    wrapper.vm.received_data_is_valid = jest.fn().mockImplementation(
-      () => true
-    );
-    await wrapper.vm.fetchData();
-    var jsonDataObj2 = jsonDataObj;
-    jsonDataObj2.m = 2;
-    console.log(data_clone);
-    console.log(jsonDataObj2);
-    expect(data_clone).toBe(jsonDataObj2);
-    
-    expect(wrapper.vm.parseDataAndUpdateMap).toHaveBeenCalled();*/
     done();
   });
   test("dati ricevuti nel fetch, ma non validi", async (done) => {

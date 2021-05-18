@@ -84,7 +84,7 @@ export default {
             max = this.data[this.data_selezionata][orario][i].flow;
           }
         });
-        let multiplier; // TODO INSERIRE LA FUNZIONE (in funzione del massimo giornaliero e forse di qualcosaltro determinare il multt)
+        let multiplier;
         if (max < 20)
           multiplier = 2.5;
         else if (max < 40)

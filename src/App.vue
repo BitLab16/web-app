@@ -61,13 +61,11 @@ export default {
         await fetch("http://localhost:5000/points/time/" + this.data_selezionata)
           .catch( error => {
             //TODO: sistemare il caso in cui non ricevo dati!
-            alert("errore nel fetch");
             console.error("Errore nel fetch " + error);
           } )
       ).json();
       if ( ! this.received_data_is_valid(dati_ricevuti_grezzi) ) {
         //TODO: cosa faccio qui?
-        alert("Errore dati ricevuti non validi!");
         console.error ("Errore dati ricevuti non validi!");
         return;
       }

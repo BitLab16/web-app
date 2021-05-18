@@ -130,7 +130,6 @@ export default {
       this.infoContent2 = dati_corretti_24;
     },
 
-
     createContent(point_id) {
       
       var import_link = '<link rel="stylesheet" href="https://unpkg.com/charts.css/dist/charts.min.css">';
