@@ -92,8 +92,13 @@
     padding-top: 12px;
   }
 
+  .headers {
+    padding-left: 3.5px;
+  }
+
   .week {
     height: 42px;
+    padding-left: 3.5px;
   }
 
   .days{

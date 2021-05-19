@@ -145,7 +145,7 @@ export default {
         case 2:
           grafico = this.getGrafico2();
       }
-      var bottoncino = '<button id="bottoncinoCambiaGrafico" onclick="window.cambiaGraficoInfoWindow()" > Cambia grafico </button>';
+      var bottoncino = '<div class="divBottone"><button id="bottoncinoCambiaGrafico" onclick="window.cambiaGraficoInfoWindow()" > Cambia grafico </button></div>';
 
       return import_link + '<div id="infoWindowDiv"> ' + header + "" + grafico + ' </div>' + bottoncino;
     },
